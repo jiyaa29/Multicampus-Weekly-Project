@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.14.1
+#       jupytext_version: 1.14.0
 #   kernelspec:
 #     display_name: nlp
 #     language: python
@@ -215,7 +215,7 @@ def generate_word_tokens(cleaned_doc):
     # # %%time
     # # %timeit으로 jupyter notebook에서 Cell 단위 코드 수행 시간 확인하기
 
-    mecab = Mecab()
+    mecab = Mecab('C:/mecab/mecab-ko-dic')
     word_tokens = mecab.morphs(cleaned_doc)
     
     print("word_tokens generated.")
