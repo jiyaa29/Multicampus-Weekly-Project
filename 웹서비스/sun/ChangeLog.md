@@ -56,16 +56,9 @@
 	-> Hello, webtoonitda! 로 수정 
 --------------------------------------------------------------------------
 
-이전 페이지로 돌아가는 버튼을 누르면 다시 선택했던 파라미터가 리셋되는 문제가 발생했다.
-
-이를 해결하기 위해서는 특정 기간동안 저장할 수 있는 쿠키를 이용해야한다.
-이번엔 파라미터로 넘기는 방법을 알아보고, 다음에 쿠키를 이용하는 방법을 알아보자.
-
-index.html , javascript로 
-
 <form action="{% url 'webtoonitda:webtoon_summary' %}" method="POST">
 	....
- 	<button a href="{% url 'webtoonitda:webtoon_summary' %}" onclick="clickStartAnalysis()">Go!</button>
+ 	<button onclick="clickStartAnalysis()">Go!</button>
 
 def webtoon_summary(request):
     if request.method == 'POST':
@@ -76,27 +69,31 @@ def webtoon_summary(request):
 request.POST.get('name') 와 같은 형태로
 request.POST.get을 활용해 name에 해당하는 입력 값을 받아온다.      
 
-
+--------------------------------------------------------------------------
+DB 생성
+--------------------------------------------------------------------------
 create() 같은 경우, 쿼리를 만들어서 바로 실행까지 넘어간다.  
 
-form을 post로 전송한 후 뒤로가기시 아래와 같은 오류 내용이 표시
-출처: https://yy8305.tistory.com/20 [인생을 바꾸는 기록:티스토리]
- 
 
+--------------------------------------------------------------------------
+뒤로가기
+--------------------------------------------------------------------------
 <a href="javascript:history.back();">뒤로가기</a>
 
+--------------------------------------------------------------------------
+MEDIA_URL 추가 
+--------------------------------------------------------------------------
+settings/base.py
 
-DEFAULT_FILE_STORAGE 추가 
+	import os
 
-
-import os
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+	MEDIA_URL = '/media/'
+	MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 urls.py
 
-urlpatterns += static(
-    settings.MEDIA_URL, 
-    document_root = settings.MEDIA_ROOT
-)
+	urlpatterns += static(
+	    settings.MEDIA_URL, 
+	    document_root = settings.MEDIA_ROOT
+	)
+--------------------------------------------------------------------------
