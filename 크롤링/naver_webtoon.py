@@ -23,6 +23,7 @@ from bs4 import BeautifulSoup as bs
 import requests
 import pandas as pd
 import matplotlib.pyplot as plt
+plt.rc('font', family='NanumGothic')
 import os
 import time
 from glob import glob
@@ -41,7 +42,7 @@ get_comments : 에피소드의 댓글을 수집하는 함수
 
 get_all_comments : 모든 에피소드의 댓글을 수집하는 함수
 
-merget_csv_files : 에피소드별 댓글 CSV 파일을 통합하는 함수
+merge_csv_files : 에피소드별 댓글 CSV 파일을 통합하는 함수
 
 get_point_participants : 에피소드별 별점과 참여자수를 구하는 함수
 get_num_reviews : 에피소드별 댓글 개수를 구하는 함수
@@ -251,10 +252,10 @@ def get_num_pages(driver, lang = 'kr', titleId = 747269, episode_no = 1):
         base_url = 'https://www.webtoons.com/en/action/omniscient-reader/episode-'
         episode_url = base_url + str(episode_no -1) + '/viewer?title_no=' + str(titleId) + '&episode_no='+str(episode_no)        
         
-    print(episode_url)
+    print("episode_url:" , episode_url)
     driver.get(episode_url)
     driver.implicitly_wait(1)
-    
+       
     if lang == 'kr':
         # 댓글창에 해당하는 프레임 선택
         driver.switch_to.frame('commentIframe')
@@ -282,31 +283,50 @@ def get_num_pages(driver, lang = 'kr', titleId = 747269, episode_no = 1):
     time.sleep(1)
     
     u_cbox_num_page = driver.find_element(By.CSS_SELECTOR,'#cbox_module > div > div.u_cbox_paginate > div > strong > span.u_cbox_num_page')
-    time.sleep(1)
-    num_pages = u_cbox_num_page.text
+    time.sleep(2)
+
+    num_pages = int(u_cbox_num_page.text)
+    
     print("num_pages:",num_pages)
        
     return num_pages
 
 
-def get_titleId_num_episodes():   
-    # 웹툰명으로 타이틀id를 구한다.
-    title_id = get_webtoon_titleId(chromedriver_path, platform, lang, webtoon) 
+def get_titleId_num_episodes(DATA_DIR, chromedriver_path, platform, lang, webtoon, USE_CSV_FILE):
+    if USE_CSV_FILE:
+        print("Read csv file.")
+        filepath = "kr_전지적 독자 시점_titleId_num_episodes.csv"
+        df = pd.read_csv(DATA_DIR+filepath) 
+        title_id = df['TitleId']
+        num_episodes = df['Num_episodes']
+    else:
+        # 웹툰명으로 타이틀id를 구한다.
+        title_id = get_webtoon_titleId(chromedriver_path, platform, lang, webtoon) 
 
-    # 웹툰의 전체 에피소드 개수를 구한다.
-    num_episodes = get_num_episodes(chromedriver_path, platform, lang, title_id)
+        # 웹툰의 전체 에피소드 개수를 구한다.
+        num_episodes = get_num_episodes(chromedriver_path, platform, lang, title_id)
 
-    # 결과를 저장할 폴더를 만든다.
-    DATA_PATH = './data/'+lang+'/'
-    if not os.path.exists(DATA_PATH):
-        os.makedirs(DATA_PATH)
-    print("set_configuration Done")
+        # 결과를 저장할 폴더를 만든다.
+        DATA_DIR = './data/'+lang+'/'
+        if not os.path.exists(DATA_DIR):
+            os.makedirs(DATA_DIR)
+
+        # DataFrame을 생성한다.
+        df = pd.DataFrame(data=[], columns=['Webtoon','TitleId','Num_episodes']) 
+        df.loc[0, 'Webtoon'] = webtoon
+        df.loc[0, 'TitleId'] = title_id
+        df.loc[0 ,'Num_episodes'] = num_episodes
+
+        df.to_csv( DATA_DIR + '{lang}_{webtoon}_titleId_num_episodes.csv'.format(lang=lang, webtoon=webtoon), index = False)
+        
+    print("get_titleId_num_episodes Done")
+    
     return title_id, num_episodes
 
 
 def get_top10_point_participants(chromedriver_path, platform = 'naver', lang = 'kr', titleId = 747269):
     """
-    에피소드별 별점과 참여자수가 가장 높은 에피소드 top10을 반환하는 함수
+    별점과 참여자수가 높은 에피소드 top10을 반환하는 함수
     """    
     df = get_point_participants(chromedriver_path, platform, lang, titleId)
     df_top10 = df.sort_values(by=['Point','Participant'], ascending=False)
@@ -387,7 +407,33 @@ def get_point_participants(chromedriver_path, platform = 'naver', lang = 'kr', t
     return df
 
 
-def get_num_reviews(chromedriver_path, num_episodes):
+# +
+def get_top10_num_reviews(chromedriver_path, platform, lang, titleId, num_episodes, USE_CSV_FILE):
+    """
+    댓글 개수가 높은 에피소드 top10을 반환하는 함수
+    """    
+    DATA_DIR = './data/'+lang+'/'
+    
+    if USE_CSV_FILE:    
+        print("Read csv file.")
+        filepath = "kr_전지적 독자 시점_num_reviews.csv"
+        df = pd.read_csv(DATA_DIR+filepath)
+    else:
+        df = get_num_reviews(chromedriver_path, lang, titleId, num_episodes, DATA_DIR)    
+    
+    df_top10 = df.sort_values(by=['Num_reviews', 'Episode'], ascending=False)
+    df_top10 = df_top10.drop(['Num_pages'], axis=1) 
+    df_top10 = df_top10.set_index(keys= 'Episode', drop=True)
+    print(df_top10[:10])
+    
+#     for i in range(10):
+#         print(df_top10['Episode'][i], df_top10['Num_reviews'][i])
+    return df_top10[:10]
+
+
+# -
+
+def get_num_reviews(chromedriver_path, lang, title_id, num_episodes, DATA_DIR):
     """
     에피소드별 댓글 개수를 구하는 함수
     """
@@ -411,69 +457,37 @@ def get_num_reviews(chromedriver_path, num_episodes):
         df.loc[episode_no, 'Num_reviews'] = int(num_pages) * reviews_per_page 
 
     # CSV 파일로 저장한다.
-    file_path = DATA_PATH + '{lang}_{webtoon}_num_reviews.csv'.format(lang=lang, webtoon=webtoon, episode_no=episode_no)
-    df.to_csv(file_path,index = False)
+    file_path = DATA_DIR + '{lang}_{webtoon}_num_reviews.csv'.format(lang=lang, webtoon=webtoon, episode_no=episode_no)
+    df.to_csv(file_path, index = False)
     print("get_num_reviews Done")    
     return df
 
 
-def show_num_reviews(df,filepath):
+def show_num_reviews(df, lang, filepath):
     plt.rc('font', family='NanumGothic')
     plt.style.use('ggplot')
     plt.rc('font', size=15)
 
     fig = plt.figure(figsize=(20,10))
     ax = fig.subplots()
-    ax.plot(df['Episode'], df['Num_reviews'], label = '에피소드별 댓글 수', marker='o')
+   
     ax.legend(loc='upper right')
 
-    ax.set_ylabel('댓글수', fontsize = 20)
-    ax.set_xlabel('에피소드', fontsize = 20)
-    ax.set_title('전지적 독자 시점 에피소드별 댓글 수)', fontsize = 30)   
-    
+    if lang == 'kr':
+        ax.plot(df['Episode'], df['Num_reviews'], label = 'The Number of Reviews per Episode', marker='o')
+        ax.set_ylabel('댓글수', fontsize = 20)
+        ax.set_xlabel('에피소드', fontsize = 20)        
+        plt.xticks(rotation=45)
+        plt.xticks(rotation=45)    
+        ax.set_title('전지적 독자 시점 댓글 수', fontsize = 30)
+    elif lang == 'en':
+        ax.plot(df['Episode'], df['Num_reviews'], label = '에피소드별 댓글 수', marker='o')
+        ax.set_ylabel('Number of Reviews', fontsize = 20)
+        ax.set_xlabel('Eposiode', fontsize = 20)        
+#         plt.xticks(rotation=90)
+#         plt.xticks(rotation=90)            
+        ax.set_title("Omniscient Reader's Number of Reviews", fontsize = 30)   
     plt.savefig(filepath)
-
-
-def get_all_comments(executable_path, lang, titleId, num_episodes):
-    """
-    모든 에피소드의 댓글을 수집하는 함수
-    """
-    for episode_no in range(1, num_episodes):
-
-        # DataFrame을 생성한다.
-        df = pd.DataFrame(data=[], columns=['Episode','Date','Review'])
-        
-        # 크롬 드라이버
-        service = Service(executable_path=chromedriver_path)
-        TIMEOUT = 1 
-        driver = webdriver.Chrome(service=service) 
-        
-        # DataFrame에 저장한다.
-        df = get_comments(driver, df, lang, titleId, episode_no)
-        driver.close()
-
-        # CSV 파일로 저장한다.
-        file_path = DATA_PATH + '{lang}_{webtoon}_episode_{episode_no}.csv'.format(lang=lang, webtoon=webtoon, episode_no=episode_no)
-        df.to_csv(file_path,index = False)
-        print("Episode", episode_no, " saved.")
-    print('get_all_comments Done.')
-
-
-def merget_csv_files():
-    """
-    에피소드별 댓글 CSV 파일을 통합하는 함수
-    """
-    file_names= glob(DATA_PATH + '*.csv')
-    print(file_names)
-
-    total = pd.DataFrame()
-    for file_name  in file_names:
-        temp = pd.read_csv(file_name, encoding='utf-8' , low_memory=False)
-        total = pd.concat([total, temp])
-
-    total.reset_index(inplace=True, drop=True)
-    total.to_csv( DATA_PATH + '{lang}_{webtoon}_episode_total.csv'.format(lang=lang, webtoon=webtoon))
-    print('Done.')
 
 
 def show_iplot_num_reviews(df,filepath):
@@ -504,6 +518,90 @@ def show_iplot_num_reviews(df,filepath):
     fig.show()
 
 
+def show_iplot_best_num_reviews(df,filepath):
+    from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
+    import chart_studio.plotly as py
+    import plotly
+    import cufflinks as cf
+    import pandas as pd
+    import numpy as np
+
+    print(plt.style.available)
+
+    # plt.style.use('classic')
+
+    fig = df.iplot(kind='bar',
+                    labels = df.index.values, 
+                    values="Num_reviews", textinfo="percent+label",
+                    title= '전지적 독자 시점 댓글 수 top10 에피소드', hole = 0.5, asFigure=True,
+                    xTitle ='에피소드',
+                    yTitle ='댓글 수',
+                    color='green'             
+                  )
+    fig.write_image(filepath)
+    fig.show()
+
+
+def show_best_num_reviews(top10, filepath):
+    """
+    가로막대바 시각화
+    """    
+    top10.plot(kind='bar', color='cornflowerblue', width=0.5, figsize=(10,10),fontsize=20 )
+    plt.style.use('ggplot')
+    plt.title('전지적 독자 시점 댓글 수 top10 에피소드', fontsize=30 , loc ='center', pad=20)
+    # plt.legend(loc='best')
+    plt.xlabel('에피소드', size = 15)
+    plt.ylabel('댓글수', size = 15)
+    plt.xticks(rotation=45)
+    
+    plt.savefig(filepath, dpi = 100)
+    
+    plt.show()
+
+
+def get_all_comments(executable_path, lang, titleId, num_episodes, DATA_DIR):
+    """
+    모든 에피소드의 댓글을 수집하는 함수
+    """
+    for episode_no in range(1, num_episodes):
+
+        # DataFrame을 생성한다.
+        df = pd.DataFrame(data=[], columns=['Episode','Date','Review'])
+        
+        # 크롬 드라이버
+        service = Service(executable_path=chromedriver_path)
+        TIMEOUT = 1 
+        driver = webdriver.Chrome(service=service) 
+        
+        # DataFrame에 저장한다.
+        df = get_comments(driver, df, lang, titleId, episode_no)
+        driver.close()
+
+        # CSV 파일로 저장한다.
+        file_path = DATA_DIR + '{lang}_{webtoon}_episode_{episode_no}.csv'.format(lang=lang, webtoon=webtoon, episode_no=episode_no)
+        df.to_csv(file_path, index = False)
+        print("Episode", episode_no, " saved.")
+    print('get_all_comments Done.')
+
+
+def merge_csv_files(DATA_DIR):
+    """
+    에피소드별 댓글 CSV 파일을 통합하는 함수
+    """
+    file_names= glob(DATA_DIR + '*.csv')
+    print(file_names)
+
+    total = pd.DataFrame()
+    for file_name  in file_names:
+        temp = pd.read_csv(file_name, encoding='utf-8' , low_memory=False)
+        total = pd.concat([total, temp])
+
+    total.reset_index(inplace=True, drop=True)
+    total.to_csv( DATA_DIR + '{lang}_{webtoon}_episode_total.csv'.format(lang=lang, webtoon=webtoon), index = False)
+    print('Done.')
+
+
+# +
 if __name__=="__main__":
     """
     Argument setting 하는 함수
@@ -515,31 +613,83 @@ if __name__=="__main__":
         webtoon = '전지적 독자 시점'
     elif lang == 'en':
         webtoon = 'Omniscient Reader'
+    
+    # raw data path
+    DATA_DIR = './data/'+lang+'/'
+    if not os.path.exists(DATA_DIR):
+        os.makedirs(DATA_DIR)
         
-    #title_id, num_episodes = get_titleId_num_episodes()
+    # result path
+    RESULT_DIR = './result/'+lang+'/'
+    if not os.path.exists(RESULT_DIR):
+        os.makedirs(RESULT_DIR)
+        
+    # 이미 저장된 csv 파일을 사용할 것인지(정적), 새로 크롤링을 해서 csv파일을 생성할 것인지 선택하는 플래그
+    # 파일이 없다면 생성하라.
+    USE_CSV_FILE = True
+
+    if USE_CSV_FILE == False:
+        # 이후 모든 함수들에 titleId, num_episodes 가 필요하다
+        title_id, num_episodes = get_titleId_num_episodes(DATA_DIR, chromedriver_path, platform, lang, webtoon, USE_CSV_FILE)
+
+    ################## 댓글 개수 구하기(한글, 영어) 완성##########################################
+#     if USE_CSV_FILE:
+#         filepath = "kr_전지적 독자 시점_num_reviews.csv"
+#         df = pd.read_csv(DATA_DIR+filepath)
+#         df = df.drop(['Num_pages'], axis=1)
+#     else:
+#         df = get_num_reviews(chromedriver_path, lang, title_id, int(num_episodes), DATA_DIR)
+    
+#     RESULT_DIR = './result/'+lang+'/'
+#     if not os.path.exists(RESULT_DIR):
+#         os.makedirs(RESULT_DIR)  
+#     filename = lang + '_num_reviews.png'
+#     filepath = RESULT_DIR + filename
+    
+#     show_num_reviews(df,lang, filepath)
+    #####################댓글 개수 기반 top10 에피소드 구하기(한글)###############################
+#     if USE_CSV_FILE:
+#         filepath = "kr_전지적 독자 시점_num_reviews.csv"
+#         df = pd.read_csv(DATA_DIR+filepath)
+#         df = df.drop(['Num_pages'], axis=1)
+#     else:
+#         df = get_num_reviews(chromedriver_path, lang, title_id, int(num_episodes), DATA_DIR)    
+    
+#     filename = 'kr_num_reviews.png'
+#     filepath = RESULT_DIR + filename
+#     show_num_reviews(df,filepath)
+
+#     filename = 'kr_iplot_num_reviews.png'
+#     filepath = RESULT_DIR + filename
+#     show_iplot_num_reviews(df,filepath)
+    
+    # best num review's episodes
+#     df = get_top10_num_reviews(chromedriver_path, platform, lang, title_id, num_episodes, USE_CSV_FILE)
+#     filename = 'kr_top10_num_reviews.png'
+#     filepath = RESULT_DIR + filename    
+#     show_best_num_reviews(df,filepath)
+    
+#     filename = 'kr_iplot_top10_num_reviews.png'
+#     filepath = RESULT_DIR + filename        
+#     show_iplot_best_num_reviews(df,filepath)
+        
+    #################댓글순, 평점순 top10 에피소드 구하기#######################
+    
+    # (chromedriver_path, platform, lang, titleId, num_episodes, USE_CSV_FILE):
+    #df = get_top10_num_reviews(chromedriver_path, platform, lang, title_id, num_episodes, USE_CSV_FILE)
+    #print("Done")
     
     # 별점, 참여자수 구하기
     #df = get_top10_point_participants(chromedriver_path, platform, lang, title_id)
     
-    # 댓글 개수 구하기
-    #df = get_num_reviews(chromedriver_path, num_episodes)
-    DATA_DIR = './data/'+lang+'/'
-    filepath = "kr_전지적 독자 시점_num_reviews.csv"
-    df = pd.read_csv(DATA_DIR+filepath)
-    df = df.drop(['Num_pages'], axis=1)
-    
-    
-    RESULT_DIR = './result/'+lang+'/'
-    if not os.path.exists(RESULT_DIR):
-        os.makedirs(RESULT_DIR)  
-    filename = 'kr_best_num_reviews.png'
-    filepath = RESULT_DIR + filename
-    show_num_reviews(df,filepath)
-    
-    filename = 'kr_iplot_best_num_reviews.png'
-    filepath = RESULT_DIR + filename
-    show_iplot_num_reviews(df,filepath)
-    
-    # 전체 댓글 수집
-    #get_all_comments(chromedriver_path, lang, title_id, num_episodes)
-    #merget_csv_files()
+    #################전체 댓글 수집##############################################
+    #get_all_comments(chromedriver_path, lang, title_id, num_episodes, DATA_DIR)
+    #merge_csv_files(DATA_DIR)
+# -
+lang = 'en'
+show_num_reviews(df,lang, filepath)
+
+
+
+
+
