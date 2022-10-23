@@ -97,3 +97,118 @@ urls.py
 	    document_root = settings.MEDIA_ROOT
 	)
 --------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------
+# sun 2022.10.22( home 페이지를 다시 common 로그인 페이지로 변경)
+--------------------------------------------------------------------------
+
+http://127.0.0.1:8000/common/login/
+
+def index(request):
+    return render(request, 'common/login.html')
+    #return render(request, 'webtoonitda/index.html')
+
+--------------------------------------------------------------------------
+common\urls.py
+
+path('login/', auth_views.LoginView.as_view(), name="login"),
+path('logout/', auth_views.LogoutView.as_view(), name="logout"),     
+
+jango auth에 내장되어 있는 LoginView, LogoutView를 사용할 수 있다. 
+따라서 앱 폴더의 views.py에서 따로 코드를 작성할 필요가 없다.
+
+as auth_views로 alias(별칭)을 주는 이유는 
+앱 폴더 내에 있는 views.py와 충돌하지 않도록 다른 이름을 사용한 것이다.
+
+
+<input type="hidden" name="next" value="{{ next }}">  <!-- 로그인 성공후 이동되는 URL -->
+
+[파일명: projects\mysite\config\settings.py]
+
+
+# 로그인 성공후 이동하는 URL
+LOGIN_REDIRECT_URL = '/'
+
+# 로그아웃시 이동하는 URL
+LOGOUT_REDIRECT_URL = '/'
+
+->
+
+# 로그인 성공후 이동하는 URL
+LOGIN_REDIRECT_URL = '/webtoonitda/index/'
+
+# 로그아웃시 이동하는 URL
+LOGOUT_REDIRECT_URL = '/'
+
+
+[파일명: C:\projects\mysite\config\urls.py]
+
+path('', views.index, name='index'),  # '/' 에 해당되는 path
+
+
+<h1>로그인</h1>
+ <form action="{% url 'login' %}" method="POST">
+     {% csrf_token %}
+     Username: <input type="text" name="username" id="">
+     <br>
+     Password: <input type="password" name="password" id="">
+     <br>
+     <input type="hidden" name="next" value="{{ next }}">
+     <input type="submit" value="login" id="">
+ </form>
+로그인 페이지 내의 <form></form> 태그 안의 next input 주목 !
+로그인을 하면 <input type="hidden" name="next" value="{{ next }}"> 로 redirect 되게 한다.
+👉🏻 즉, 로그인 페이지로 들어올 때, login url 뒤에 붙어있던 next 변수 안에 담긴 path로 redirect 하는 것이다.
+
+여기서 일반적인 로그인 구현에 더해서, 만약 'next'가 request.POST에 있다면 request.POST.get('next')로 redirect 하게끔 구현해주었다. 이를 통해 로그인을 하면 원하는 페이지로 바로 접근이 가능하게끔 구현을 해주었다.
+
+--------------------------------------------------------------------------  
+
+회원 가입 후에 다시 같은 로그인 페이지가 load됨 , 웹툰 페이지로 이동해야 함.
+회원 가입 후  webtoonitda/index.html 로 이동함 
+
+
+common/views.py
+
+def signup(request):
+
+            if user is not None:
+                login(request, user)  # 로그인
+                #return redirect('index')  <-------------------
+
+                # 로그인 된 후 webtoonitda main page로 이동
+                return render(request, 'webtoonitda/index.html')
+            else:
+                # Return an 'invalid login' error message.
+                return redirect('index')
+                # return render(request, 'common/login.html')
+--------------------------------------------------------------------------
+
+http://127.0.0.1:8000/ 에서 로그아웃 상태이면 common/login.html
+
+http://127.0.0.1:8000/ 에서 로그인 상태라면  webtoonitda/index.html
+
+--------------------------------------------------------------------------
+로그인 후에 다시 같은 로그인 페이지가 load됨 , 웹툰 페이지로 이동해야 함.
+로그인 이후 특정 페이지로 이동하기 (로그인 버튼을 클릭하면 webtoonitda/index.html 로 이동하기)
+
+특정 페이지(A)에 들어가려고 한다
+로그인이 되어 있지 않으므로 웹사이트에서 바로 로그인 페이지로 redirect한다.
+로그인을 하면 로그인 후 원래 가려던 페이지(A)로 바로 redirect 된다.   
+
+
+http://127.0.0.1:8000/webtoonitda/index/ 로 direct 접근하면 서비스 되는 문제가 있다.
+
+-> 로그인이 되어 있지 않으므로 웹사이트에서 바로 로그인 페이지로 redirect한다.
+
+
+webtoonitda/views/base_views.py
+
+def index(request):
+    if request.user.is_authenticated:
+        return render(request, 'webtoonitda/index.html')
+    else:
+        return render(request, 'common/login.html')
+
+--------------------------------------------------------------------------     

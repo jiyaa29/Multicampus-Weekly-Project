@@ -10,8 +10,14 @@ from webtoonitda.views.naver_webtoon import get_webtoon_titleId, get_top10_point
 
 logger = logging.getLogger('webtoonitda')
 
+def login(request):
+    return render(request, 'common/login.html')
+
 def index(request):
-    return render(request, 'webtoonitda/index.html')
+    if request.user.is_authenticated:
+        return render(request, 'webtoonitda/index.html')
+    else:
+        return render(request, 'common/login.html')
 
 def webtoon_summary(request):
     if request.method == 'POST':

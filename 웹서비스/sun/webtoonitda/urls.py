@@ -7,7 +7,9 @@ app_name = 'webtoonitda'
 
 urlpatterns = [
     # base
-    path('', base_views.index, name='index'),
+    #path('', base_views.index, name='index'),
+
+    path('index/', base_views.index, name='index'),  # http://127.0.0.1:8000/webtoonitda/index
     path('webtoon_summary/', base_views.webtoon_summary, name='webtoon_summary'),
 
     path('show_num_reviews/<str:lang>/<str:platform>/<str:webtoon>', base_views.show_num_reviews, name="show_num_reviews"),
