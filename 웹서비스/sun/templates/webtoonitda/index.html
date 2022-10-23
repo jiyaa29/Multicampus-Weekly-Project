@@ -12,6 +12,7 @@ h1 {
 }
 
 
+
 </style>
 <div class="container my-3">
     <h1> webtoonitda에 오신 것을 환영합니다!</h1>
@@ -25,34 +26,52 @@ h1 {
             <div class="card mb-4">
                 <div class="card-header">Search</div>
                 <div class="card-body">
-                    <h5> 언어를 선택하세요. </h5>
+                    <h5> 언어</h5>
                     <div class="input-group">
                         <select class="form-select" id="selectbox_lang" name="lang" onchange="changeLangSelect()">
-                            <option value="" selected disabled>언어를 선택</option>
-
-                            <option value="en">영어</option>
+                            <option value="" selected disabled>언어를 선택하세요</option>
                             <option value="kr">한글</option>
+                            <option value="en">영어</option>
+                            <option value="kr">일본어</option>
+                            <option value="kr">중국어</option>
+                            <option value="kr">프랑스어</option>
+                            <option value="kr">독일어</option>
                         </select>
                     </div>
                     <br>
-                    <h5> 플랫폼을 선택하세요. </h5>
+                    <h5> 플랫폼</h5>
                     <div class="input-group">
                         <select class="form-select" id="selectbox_platform" name="platform"
                                 onchange="changePlatformSelect()">
-                            <option value="" selected disabled>플랫폼을 선택</option>
+                            <option value="" selected disabled>플랫폼을 선택하세요</option>
                             <option value="naver">네이버웹툰</option>
                             <option value="kakao">카카오웹툰</option>
+                            <option value="toomics">투믹스</option>
+                            <option value="toptoon">탑툰</option>
+                            <option value="kakaopage">카카오페이지</option>
+                            <option value="lezhin">레진코믹스</option>
+                            <option value="postype">포스타입</option>
+                            <option value="comico">코미코</option>
+                            <option value="yktoon">케이툰</option>
+                            <option value="mrblue">미스터블루</option>
                         </select>
 
                     </div>
                     <br>
-                    <h5> 웹툰을 선택하세요. </h5>
+                    <h5> 웹툰</h5>
                     <div class="input-group">
                         <select class="form-select" id="selectbox_webtoon" name="webtoon"
                                 onchange="changeWebtoonSelect()">
-                            <option value="" selected disabled>웹툰을 선택</option>
+                            <option value="" selected disabled>웹툰을 선택하세요</option>
                             <option value="전지적 독자 시점">전지적 독자 시점</option>
                             <option value="여신 강림">여신 강림</option>
+                            <option value="외모지상주의">외모지상주의</option>
+                            <option value="연애혁명">연애혁명</option>
+                            <option value="복학왕">복학왕</option>
+                            <option value="신의 탑">신의 탑</option>
+                            <option value="마음의 소리">마음의 소리</option>
+                            <option value="대학일기">대학일기</option>
+
                         </select>
                         <button type="submit" class="btn btn-outline-secondary" onclick="clickStartAnalysis()">Go!
                         </button>
@@ -72,7 +91,7 @@ h1 {
                 <div class="card-body">
                     <div class="small_text-muted">December 6, 2021</div>
                     <a href="https://edition.cnn.com/videos/tv/2016/04/04/south-korea-webtoons-hancocks-pkg.cnn"
-                    class="card-title">South Korean Webtoons Craze Goes Global</a>
+                       class="card-title">South Korean Webtoons Craze Goes Global</a>
 
                     <a href="https://edition.cnn.com/videos/tv/2016/04/04/south-korea-webtoons-hancocks-pkg.cnn"><img
                             class="card-img-top"
@@ -93,7 +112,8 @@ h1 {
             <div class="card-body">
                 <div class="card-body">
                     <div class="small text-muted">2019-09-04 12:33</div>
-                    <a href="https://www.etnews.com/20190904000118" class="card-title">[이슈분석]'K-웹툰' 매출 1조원 눈앞…만화 같은 '성장 스토리'</a>
+                    <a href="https://www.etnews.com/20190904000118" class="card-title">[이슈분석]'K-웹툰' 매출 1조원 눈앞…만화 같은 '성장
+                        스토리'</a>
                 </div>
                 <a href="https://www.etnews.com/20190904000118"><img class="card-img-top"
                                                                      src="/media/news3.jpg"
@@ -103,7 +123,8 @@ h1 {
             <div class="card-body">
                 <div class="card-body">
                     <div class="small text-muted"> 2021.03.16 14:00</div>
-                    <a href="https://www.sisajournal.com/news/articleView.html?idxno=213395" class="card-title">잠재 시장만 100조원…K웹툰 新한류을
+                    <a href="https://www.sisajournal.com/news/articleView.html?idxno=213395" class="card-title">잠재 시장만
+                        100조원…K웹툰 新한류을
                         이끌다</a>
                 </div>
                 <a href="https://www.sisajournal.com/news/articleView.html?idxno=213395"><img class="card-img-top"
@@ -125,7 +146,8 @@ h1 {
             <div class="card-body">
                 <div class="card-body">
                     <div class="small text-muted">December 6, 2021</div>
-                    <a href="https://www.joongang.co.kr/article/25029536#home" class="card-title">‘웹툰’ 단어조차 없던 미국, 이젠 네이버웹툰 월 이용자
+                    <a href="https://www.joongang.co.kr/article/25029536#home" class="card-title">‘웹툰’ 단어조차 없던 미국, 이젠
+                        네이버웹툰 월 이용자
                         1400만명</a>
                 </div>
                 <a href="https://www.joongang.co.kr/article/25029536#home"><img class="card-img-top"
@@ -144,87 +166,86 @@ h1 {
                 </ul>
 
 
-
             </div>
         </div>
 
     </div>
     <div class="col-4">
-            <!-- Categories widget-->
-            <div class="card mb-4">
-                <div class="card-header">Categories</div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <ul class="list-unstyled mb-0">
-                                <li><a href="#!">플랫폼</a></li>
-                                <li><a href="#!">프러덕션 & 에이전시</a></li>
-                                <li><a href="#!">작품</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-6">
-                            <ul class="list-unstyled mb-0">
-                                <li><a href="#!">작가 목록</a></li>
-                                <li><a href="#!">OSMU(One Source Multi Use)</a></li>
-                                <li><a href="#!">전문가 분석</a></li>
-                            </ul>
-                        </div>
+        <!-- Categories widget-->
+        <div class="card mb-4">
+            <div class="card-header">Categories</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <ul class="list-unstyled mb-0">
+                            <li><a href="#!">플랫폼</a></li>
+                            <li><a href="#!">프러덕션 & 에이전시</a></li>
+                            <li><a href="#!">작품</a></li>
+                        </ul>
                     </div>
-                </div>
-            </div>
-
-            <!-- 4주간 인기 순위 추이-->
-            <div class="card mb-4">
-                <div class="card-header">인기 순위 추이</div>
-                <div class="card-body">
-                    <div class="row">
-
-                        <h3> 인기 순위 추이 이미지 </h3>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-</div>
-
-    {% endblock %}
-
-
-    <section id="newsSection">
-
-        <div class="row">
-            <div class="col-lg-12 col-md-12">
-                <div class="latest_newsarea"><span>Latest News</span>
-                    <ul id="ticker01" class="news_sticker">
-                        <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My First News Item</a></li>
-                        <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Second News Item</a></li>
-                        <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Third News Item</a></li>
-                        <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Four News Item</a></li>
-                        <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Five News Item</a></li>
-                        <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Six News Item</a></li>
-                        <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Seven News Item</a></li>
-                        <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Eight News Item</a></li>
-                        <li><a href="#"><img src="images/news_thumbnail2.jpg" alt="">My Nine News Item</a></li>
-                    </ul>
-                    <div class="social_area">
-                        <ul class="social_nav">
-                            <li class="facebook"><a href="#"></a></li>
-                            <li class="twitter"><a href="#"></a></li>
-                            <li class="flickr"><a href="#"></a></li>
-                            <li class="pinterest"><a href="#"></a></li>
-                            <li class="googleplus"><a href="#"></a></li>
-                            <li class="vimeo"><a href="#"></a></li>
-                            <li class="youtube"><a href="#"></a></li>
-                            <li class="mail"><a href="#"></a></li>
+                    <div class="col-sm-6">
+                        <ul class="list-unstyled mb-0">
+                            <li><a href="#!">작가 목록</a></li>
+                            <li><a href="#!">OSMU(One Source Multi Use)</a></li>
+                            <li><a href="#!">전문가 분석</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    {% block script %}
-    <script type='text/javascript'>
+        <!-- 4주간 인기 순위 추이-->
+        <div class="card mb-4">
+            <div class="card-header">인기 순위 추이</div>
+            <div class="card-body">
+                <div class="row">
+
+                    <h3> 인기 순위 추이 이미지 </h3>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+<section id="newsSection">
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="latest_newsarea"><span>Latest News</span>
+                <ul id="ticker01" class="news_sticker">
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My First News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Second News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Third News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Four News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Five News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Six News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Seven News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Eight News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail2.jpg" alt="">My Nine News Item</a></li>
+                </ul>
+                <div class="social_area">
+                    <ul class="social_nav">
+                        <li class="facebook"><a href="#"></a></li>
+                        <li class="twitter"><a href="#"></a></li>
+                        <li class="flickr"><a href="#"></a></li>
+                        <li class="pinterest"><a href="#"></a></li>
+                        <li class="googleplus"><a href="#"></a></li>
+                        <li class="vimeo"><a href="#"></a></li>
+                        <li class="youtube"><a href="#"></a></li>
+                        <li class="mail"><a href="#"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% block script %}
+<script type='text/javascript'>
 
 var result = document.getElementById("result");
 
@@ -286,6 +307,7 @@ function changeEpisodeSelect(){
 
 
 
-    </script>
 
-    {% endblock %}
+</script>
+
+{% endblock %}
