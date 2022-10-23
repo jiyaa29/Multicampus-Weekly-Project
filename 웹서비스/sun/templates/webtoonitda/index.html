@@ -4,8 +4,14 @@
 
 <style>
 h1 {
-  text-align: center;
+    text-align: center;
 }
+
+.card-title{
+    font-size: 30px; font-weight: bolder
+}
+
+
 </style>
 <div class="container my-3">
     <h1> webtoonitda에 오신 것을 환영합니다!</h1>
@@ -13,6 +19,7 @@ h1 {
 
 <div class="row">
     <div class="col-3">
+        <!--        Search section-->
         <form action="{% url 'webtoonitda:webtoon_summary' %}" method="POST">
             {% csrf_token %}
             <div class="card mb-4">
@@ -57,111 +64,152 @@ h1 {
         </form>
     </div>
     <div class="col-5">
-        <!--                    <h3>최신 기사</h3>-->
-        <!-- Blog post-->
+        <!-- News post-->
         <div class="card mb-4">
             <div class="card-header">Latest News</div>
+            <!-- News1-->
             <div class="card-body">
-                <a href="#!"><img class="card-img-top" src="./images/kyo.jfif"
-                                  alt="..."/></a>
                 <div class="card-body">
-                    <div class="small text-muted">January 1, 2022</div>
-                    <h2 class="card-title h4">Post Title</h2>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
-                        aliquid atque, nulla.</p>
-                    <a class="btn btn-primary" href="#!">Read more →</a>
+                    <div class="small_text-muted">December 6, 2021</div>
+                    <a href="https://edition.cnn.com/videos/tv/2016/04/04/south-korea-webtoons-hancocks-pkg.cnn"
+                    class="card-title">South Korean Webtoons Craze Goes Global</a>
+
+                    <a href="https://edition.cnn.com/videos/tv/2016/04/04/south-korea-webtoons-hancocks-pkg.cnn"><img
+                            class="card-img-top"
+                            src="/media/news1.jpg"
+                            alt="..."/></a>
                 </div>
             </div>
-            <!-- Blog post-->
-            <div class="card mb-4">
-                <a href="#!"><img class="card-img-top" src="./images/kyo2.jfif"
-                                  alt="..."/></a>
+            <!-- News2-->
+            <div class="card-body">
                 <div class="card-body">
-                    <div class="small text-muted">January 1, 2022</div>
-                    <h2 class="card-title h4">Post Title</h2>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
-                        aliquid atque, nulla.</p>
-                    <a class="btn btn-primary" href="#!">Read more →</a>
+                    <div class="small text-muted">January 20, 2021</div>
+                    <a href="https://publy.co/content/6123" class="card-title">미국에서도 통한, 네이버 웹툰의 무서운 성장세</a>
                 </div>
+                <a href="https://publy.co/content/6123"><img class="card-img-top" src="/media/news2.jpg"
+                                                             alt="..."/></a>
             </div>
-            <!-- Pagination-->
-            <ul class="pagination justify-content-center my-4">
-                <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"
-                                                  aria-disabled="true">Newer</a></li>
-                <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-                <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-                <li class="page-item"><a class="page-link" href="#!">15</a></li>
-                <li class="page-item"><a class="page-link" href="#!">Older</a></li>
-            </ul>
+            <!-- News3-->
+            <div class="card-body">
+                <div class="card-body">
+                    <div class="small text-muted">2019-09-04 12:33</div>
+                    <a href="https://www.etnews.com/20190904000118" class="card-title">[이슈분석]'K-웹툰' 매출 1조원 눈앞…만화 같은 '성장 스토리'</a>
+                </div>
+                <a href="https://www.etnews.com/20190904000118"><img class="card-img-top"
+                                                                     src="/media/news3.jpg"
+                                                                     alt="..."/></a>
+            </div>
+            <!-- News4-->
+            <div class="card-body">
+                <div class="card-body">
+                    <div class="small text-muted"> 2021.03.16 14:00</div>
+                    <a href="https://www.sisajournal.com/news/articleView.html?idxno=213395" class="card-title">잠재 시장만 100조원…K웹툰 新한류을
+                        이끌다</a>
+                </div>
+                <a href="https://www.sisajournal.com/news/articleView.html?idxno=213395"><img class="card-img-top"
+                                                                                              src="/media/news4.jpg"
+                                                                                              alt="..."/></a>
+            </div>
+
+            <!-- News5-->
+            <div class="card-body">
+                <div class="card-body">
+                    <div class="small text-muted"> 2021.03.16 14:00</div>
+                    <a href="https://koreancontent.kr/3754" class="card-title">비상하는 K-웹툰! 해외 만화시장 변동 및 국내 웹툰 수출 현황</a>
+                </div>
+                <a href="https://koreancontent.kr/3754"><img class="card-img-top"
+                                                             src="/media/news5.jpg"
+                                                             alt="..."/></a>
+            </div>
+            <!-- News6-->
+            <div class="card-body">
+                <div class="card-body">
+                    <div class="small text-muted">December 6, 2021</div>
+                    <a href="https://www.joongang.co.kr/article/25029536#home" class="card-title">‘웹툰’ 단어조차 없던 미국, 이젠 네이버웹툰 월 이용자
+                        1400만명</a>
+                </div>
+                <a href="https://www.joongang.co.kr/article/25029536#home"><img class="card-img-top"
+                                                                                src="/media/news6.jpg"
+                                                                                alt="..."/></a>
+                <!-- Pagination-->
+                <ul class="pagination justify-content-center my-4">
+                    <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"
+                                                      aria-disabled="true">Newer</a></li>
+                    <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">3</a></li>
+                    <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">15</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">Older</a></li>
+                </ul>
+            </div>
         </div>
+
     </div>
     <div class="col-4">
-        <!-- Categories widget-->
-        <div class="card mb-4">
-            <div class="card-header">Categories</div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <ul class="list-unstyled mb-0">
-                            <li><a href="#!">Web Design</a></li>
-                            <li><a href="#!">HTML</a></li>
-                            <li><a href="#!">Freebies</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-6">
-                        <ul class="list-unstyled mb-0">
-                            <li><a href="#!">JavaScript</a></li>
-                            <li><a href="#!">CSS</a></li>
-                            <li><a href="#!">Tutorials</a></li>
-                        </ul>
+            <!-- Categories widget-->
+            <div class="card mb-4">
+                <div class="card-header">Categories</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled mb-0">
+                                <li><a href="#!">Web Design</a></li>
+                                <li><a href="#!">HTML</a></li>
+                                <li><a href="#!">Freebies</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled mb-0">
+                                <li><a href="#!">JavaScript</a></li>
+                                <li><a href="#!">CSS</a></li>
+                                <li><a href="#!">Tutorials</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </div>
 
+    {% endblock %}
 
-{% endblock %}
 
+    <section id="newsSection">
 
-<section id="newsSection">
-
-    <div class="row">
-        <div class="col-lg-12 col-md-12">
-            <div class="latest_newsarea"><span>Latest News</span>
-                <ul id="ticker01" class="news_sticker">
-                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My First News Item</a></li>
-                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Second News Item</a></li>
-                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Third News Item</a></li>
-                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Four News Item</a></li>
-                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Five News Item</a></li>
-                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Six News Item</a></li>
-                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Seven News Item</a></li>
-                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Eight News Item</a></li>
-                    <li><a href="#"><img src="images/news_thumbnail2.jpg" alt="">My Nine News Item</a></li>
-                </ul>
-                <div class="social_area">
-                    <ul class="social_nav">
-                        <li class="facebook"><a href="#"></a></li>
-                        <li class="twitter"><a href="#"></a></li>
-                        <li class="flickr"><a href="#"></a></li>
-                        <li class="pinterest"><a href="#"></a></li>
-                        <li class="googleplus"><a href="#"></a></li>
-                        <li class="vimeo"><a href="#"></a></li>
-                        <li class="youtube"><a href="#"></a></li>
-                        <li class="mail"><a href="#"></a></li>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="latest_newsarea"><span>Latest News</span>
+                    <ul id="ticker01" class="news_sticker">
+                        <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My First News Item</a></li>
+                        <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Second News Item</a></li>
+                        <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Third News Item</a></li>
+                        <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Four News Item</a></li>
+                        <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Five News Item</a></li>
+                        <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Six News Item</a></li>
+                        <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Seven News Item</a></li>
+                        <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Eight News Item</a></li>
+                        <li><a href="#"><img src="images/news_thumbnail2.jpg" alt="">My Nine News Item</a></li>
                     </ul>
+                    <div class="social_area">
+                        <ul class="social_nav">
+                            <li class="facebook"><a href="#"></a></li>
+                            <li class="twitter"><a href="#"></a></li>
+                            <li class="flickr"><a href="#"></a></li>
+                            <li class="pinterest"><a href="#"></a></li>
+                            <li class="googleplus"><a href="#"></a></li>
+                            <li class="vimeo"><a href="#"></a></li>
+                            <li class="youtube"><a href="#"></a></li>
+                            <li class="mail"><a href="#"></a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-{% block script %}
-<script type='text/javascript'>
+    {% block script %}
+    <script type='text/javascript'>
 
 var result = document.getElementById("result");
 
@@ -218,6 +266,11 @@ function changeEpisodeSelect(){
 
 
 
-</script>
 
-{% endblock %}
+
+
+
+
+    </script>
+
+    {% endblock %}
