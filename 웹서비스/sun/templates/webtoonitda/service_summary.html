@@ -4,11 +4,15 @@
 <div class="container my-3">
     <h1> webtoon service summary</h1>
 
-    {% if lang == 'kr' %}
-    <h5> 한글 , {{platform}} , {{webtoon}} 분석을 시작합니다.</h5>
-    {% elif lang == 'en' %}
-    <h5> 영어 , {{platform}} , {{webtoon}} 분석을 시작합니다.</h5>
-    {% endif %}
+<!--    {% if platform != 'naver' and webtoon != '전지적 독자 시점' %}-->
+<!--         <h2> 앗앗앗! {{webtoon}}에 대해 아직 준비된 서비스가 없습니다.</h2>-->
+<!--    {% else %}-->
+        {% if lang == 'kr' %}
+        <h5> 한글 , {{platform}} , {{webtoon}} 분석을 시작합니다.</h5>
+        {% elif lang == 'en' %}
+        <h5> 영어 , {{platform}} , {{webtoon}} 분석을 시작합니다.</h5>
+        {% endif %}
+<!--    {% endif %}-->
 
 </div>
 
@@ -58,7 +62,8 @@
                     <br>
 
                     <h3>
-                        <li><a href="{% url 'webtoonitda:show_keywords' lang platform webtoon %}">중요 / 유사 키워드 Top10</a></li>
+                        <li><a href="{% url 'webtoonitda:show_keywords' lang platform webtoon %}">중요 / 유사 키워드 Top10</a>
+                        </li>
                     </h3>
                     <br>
                 </ul>

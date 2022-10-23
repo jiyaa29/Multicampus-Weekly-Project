@@ -63,7 +63,13 @@ def get_best_episodes_by_reviews(request, lang, platform, webtoon):
 
     print("Done")
 
-    context = {'df': df[:10].to_html(justify='center')}
+    context = {
+        'lang': lang,
+        'platform': platform,
+        'webtoon': webtoon,
+        'df': df[:10].to_html(justify='center')
+    }  # 템플릿에 전달할 데이터를 세팅할 수 있는 오브젝트
+
     return render(request, 'webtoonitda/show_best_episodes_by_reviews.html', context)
 
 def show_keywords(request, lang, platform, webtoon):

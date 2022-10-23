@@ -415,14 +415,18 @@ def get_top10_num_reviews(chromedriver_path, platform, lang, titleId, num_episod
         
     if USE_CSV_FILE:
         print('USE_CSV_FILE')
-        filepath = "kr_전지적 독자 시점_num_reviews.csv"
+        if lang == 'kr':
+            filepath = "kr_전지적 독자 시점_num_reviews.csv"
+        elif lang == 'en':
+            filepath = "en_Omniscient Reader_num_reviews.csv"
         df = pd.read_csv(DATA_DIR+filepath)
     else:
         print('get_top10_num_reviews')
         df = get_num_reviews(chromedriver_path, lang, titleId, num_episodes, DATA_DIR)                     
-    
+
     df_top10 = df.drop(['Num_pages'], axis=1) 
-    df_top10 = df.sort_values(by='Num_reviews', ascending=False)
+    print(df_top10)
+    df_top10 = df_top10.sort_values(by='Num_reviews', ascending=False)
     
     print(df_top10[:10])
     return df_top10[:10]
@@ -540,14 +544,20 @@ def show_best_num_reviews(top10, lang, filepath):
     """
     가로막대바 시각화
     """    
-    top10[:10].plot(kind='bar', color='cornflowerblue', width=0.5, figsize=(10,10),fontsize=20 )
+    top10.plot(kind='bar', color='cornflowerblue', width=0.5, figsize=(10,10),fontsize=20 )
     plt.style.use('ggplot')
-    plt.title('전지적 독자 시점 댓글 수 top10 에피소드', fontsize=30 , loc ='center', pad=20)
-     plt.legend(loc='best')
-    plt.xlabel('에피소드', size = 15)
-    plt.ylabel('댓글수', size = 15)
-    plt.xticks(rotation=0)
     
+    if lang == 'kr':
+        plt.title('전지적 독자 시점 댓글 수 top10 에피소드', fontsize=30 , loc ='center', pad=20)
+        plt.xlabel('에피소드', size = 15)
+        plt.ylabel('댓글수', size = 15)
+        plt.xticks(rotation=0)
+    elif lang == 'en':
+        plt.title('Omniscient Reader Number of Reviews top10 episodes', fontsize=30 , loc ='center', pad=20)
+        plt.xlabel('Episode', size = 15)
+        plt.ylabel('The Number of Reviews', size = 15)
+        plt.xticks(rotation=0)
+        
     plt.savefig(filepath, dpi = 100)    
     plt.show()
 
@@ -601,7 +611,7 @@ if __name__=="__main__":
     """
     chromedriver_path='C:\Temp\chromedriver.exe'
     platform = 'naver'
-    lang ='kr'
+    lang ='en'
     if lang == 'kr':
         webtoon = '전지적 독자 시점'
     elif lang == 'en':
@@ -645,7 +655,7 @@ if __name__=="__main__":
 
     filename = lang + '_top10_num_reviews.png'
     filepath = RESULT_DIR + filename
-    show_best_num_reviews(df_top10, lang, filepath)
+    show_best_num_reviews(df, lang, filepath)
 
 #     filename = 'kr_iplot_num_reviews.png'
 #     filepath = RESULT_DIR + filename
