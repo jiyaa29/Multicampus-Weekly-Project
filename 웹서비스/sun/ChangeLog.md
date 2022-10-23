@@ -211,4 +211,23 @@ def index(request):
     else:
         return render(request, 'common/login.html')
 
+
+--------------------------------------------------------------------------     
+templates\pybo\question_list.html
+
+<form id="searchForm" method="get" action="{% url 'index' %}">
+
+<form id="searchForm" method="get" action="{% url 'pybo:index' %}">
+
+로그아웃 상태인데 http://127.0.0.1:8000/pybo/	 접근시 서비스 되는 문제
+
+
+pybo\views\base_views.py
+def index(request):
+
+    if request.user.is_authenticated:
+    	.....
+        return render(request, 'pybo/question_list.html', context)
+    else:
+        return render(request, 'common/login.html')
 --------------------------------------------------------------------------     
