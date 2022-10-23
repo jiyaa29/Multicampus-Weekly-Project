@@ -219,7 +219,7 @@ templates\pybo\question_list.html
 
 <form id="searchForm" method="get" action="{% url 'pybo:index' %}">
 
-로그아웃 상태인데 http://127.0.0.1:8000/pybo/	 접근시 서비스 되는 문제
+로그아웃 상태인데 http://127.0.0.1:8000/pybo/	 접근시 서비스 되는 문제 수정 
 
 
 pybo\views\base_views.py
@@ -231,3 +231,11 @@ def index(request):
     else:
         return render(request, 'common/login.html')
 --------------------------------------------------------------------------     
+부트스트랩 로그인 폼
+
+https://www.sliderrevolution.com/resources/bootstrap-login-form/
+
+
+-------------------------------------------------------------------------- 
+뉴스 기사 layout 추가
+

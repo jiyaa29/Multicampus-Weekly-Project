@@ -5,47 +5,93 @@
     <h1> webtoonitda에 오신 것을 환영합니다!</h1>
 </div>
 
-<form action="{% url 'webtoonitda:webtoon_summary' %}" method="POST">
-    {% csrf_token %}
-    <div class="col-sm-4 col-lg-3">
-        <!-- Search widget-->
-        <div class="card mb-4">
-            <div class="card-header">Search</div>
-            <div class="card-body">
-                <h5> 언어를 선택하세요. </h5>
-                <div class="input-group">
-                    <select class="form-select" id="selectbox_lang" name="lang" onchange="changeLangSelect()">
-                        <option value="" selected disabled>언어를 선택</option>
+<div class="row">
+    <div class="col-3">
+        <form action="{% url 'webtoonitda:webtoon_summary' %}" method="POST">
+            {% csrf_token %}
+            <div class="card mb-4">
+                <div class="card-header">Search</div>
+                <div class="card-body">
+                    <h5> 언어를 선택하세요. </h5>
+                    <div class="input-group">
+                        <select class="form-select" id="selectbox_lang" name="lang" onchange="changeLangSelect()">
+                            <option value="" selected disabled>언어를 선택</option>
 
-                        <option value="en">영어</option>
-                        <option value="kr">한글</option>
-                    </select>
-                </div>
-                <br>
-                <h5> 플랫폼을 선택하세요. </h5>
-                <div class="input-group">
-                    <select class="form-select" id="selectbox_platform" name="platform"
-                            onchange="changePlatformSelect()">
-                        <option value="" selected disabled>플랫폼을 선택</option>
-                        <option value="naver">네이버웹툰</option>
-                        <option value="kakao">카카오웹툰</option>
-                    </select>
+                            <option value="en">영어</option>
+                            <option value="kr">한글</option>
+                        </select>
+                    </div>
+                    <br>
+                    <h5> 플랫폼을 선택하세요. </h5>
+                    <div class="input-group">
+                        <select class="form-select" id="selectbox_platform" name="platform"
+                                onchange="changePlatformSelect()">
+                            <option value="" selected disabled>플랫폼을 선택</option>
+                            <option value="naver">네이버웹툰</option>
+                            <option value="kakao">카카오웹툰</option>
+                        </select>
 
-                </div>
-                <br>
-                <h5> 웹툰을 선택하세요. </h5>
-                <div class="input-group">
-                    <select class="form-select" id="selectbox_webtoon" name="webtoon" onchange="changeWebtoonSelect()">
-                        <option value="" selected disabled>웹툰을 선택</option>
-                        <option value="전지적 독자 시점">전지적 독자 시점</option>
-                        <option value="여신 강림">여신 강림</option>
-                    </select>
-                    <button type="submit" class="btn btn-outline-secondary" onclick="clickStartAnalysis()">Go!</button>
-                </div>
+                    </div>
+                    <br>
+                    <h5> 웹툰을 선택하세요. </h5>
+                    <div class="input-group">
+                        <select class="form-select" id="selectbox_webtoon" name="webtoon"
+                                onchange="changeWebtoonSelect()">
+                            <option value="" selected disabled>웹툰을 선택</option>
+                            <option value="전지적 독자 시점">전지적 독자 시점</option>
+                            <option value="여신 강림">여신 강림</option>
+                        </select>
+                        <button type="submit" class="btn btn-outline-secondary" onclick="clickStartAnalysis()">Go!
+                        </button>
+                    </div>
 
-                <div id="result"></div>
+                    <div id="result"></div>
+                </div>
             </div>
+        </form>
+    </div>
+    <div class="col-6">
+        <!--                    <h3>최신 기사</h3>-->
+        <!-- Blog post-->
+        <div class="card mb-4">
+            <div class="card-header">Latest News</div>
+            <div class="card-body">
+                <a href="#!"><img class="card-img-top" src="./images/kyo.jfif"
+                                  alt="..."/></a>
+                <div class="card-body">
+                    <div class="small text-muted">January 1, 2022</div>
+                    <h2 class="card-title h4">Post Title</h2>
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
+                        aliquid atque, nulla.</p>
+                    <a class="btn btn-primary" href="#!">Read more →</a>
+                </div>
+            </div>
+            <!-- Blog post-->
+            <div class="card mb-4">
+                <a href="#!"><img class="card-img-top" src="./images/kyo2.jfif"
+                                  alt="..."/></a>
+                <div class="card-body">
+                    <div class="small text-muted">January 1, 2022</div>
+                    <h2 class="card-title h4">Post Title</h2>
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
+                        aliquid atque, nulla.</p>
+                    <a class="btn btn-primary" href="#!">Read more →</a>
+                </div>
+            </div>
+            <!-- Pagination-->
+            <ul class="pagination justify-content-center my-4">
+                <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"
+                                                  aria-disabled="true">Newer</a></li>
+                <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
+                <li class="page-item"><a class="page-link" href="#!">2</a></li>
+                <li class="page-item"><a class="page-link" href="#!">3</a></li>
+                <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
+                <li class="page-item"><a class="page-link" href="#!">15</a></li>
+                <li class="page-item"><a class="page-link" href="#!">Older</a></li>
+            </ul>
         </div>
+    </div>
+    <div class="col-3">
         <!-- Categories widget-->
         <div class="card mb-4">
             <div class="card-header">Categories</div>
@@ -69,10 +115,45 @@
             </div>
         </div>
     </div>
-</form>
+</div>
 
 
 {% endblock %}
+
+
+<section id="newsSection">
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="latest_newsarea"><span>Latest News</span>
+                <ul id="ticker01" class="news_sticker">
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My First News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Second News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Third News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Four News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Five News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Six News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Seven News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Eight News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail2.jpg" alt="">My Nine News Item</a></li>
+                </ul>
+                <div class="social_area">
+                    <ul class="social_nav">
+                        <li class="facebook"><a href="#"></a></li>
+                        <li class="twitter"><a href="#"></a></li>
+                        <li class="flickr"><a href="#"></a></li>
+                        <li class="pinterest"><a href="#"></a></li>
+                        <li class="googleplus"><a href="#"></a></li>
+                        <li class="vimeo"><a href="#"></a></li>
+                        <li class="youtube"><a href="#"></a></li>
+                        <li class="mail"><a href="#"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 {% block script %}
 <script type='text/javascript'>
 
@@ -122,6 +203,11 @@ function changeEpisodeSelect(){
     selectedEpisode = selectedText;
     result.innerHTML = selectedLang + ' ' + selectedPlatform + ' ' + selectedWebtoon +  ' ' +selectedEpisode + "을 선택하셨습니다."
 }
+
+
+
+
+
 
 
 </script>
