@@ -56,11 +56,11 @@
 	-> Hello, webtoonitda! 로 수정 
 --------------------------------------------------------------------------
 
-<form action="{% url 'webtoonitda:webtoon_summary' %}" method="POST">
+<form action="{% url 'webtoonitda:service_summary' %}" method="POST">
 	....
  	<button onclick="clickStartAnalysis()">Go!</button>
 
-def webtoon_summary(request):
+def service_summary(request):
     if request.method == 'POST':
         lang = request.POST.get('lang')
         platform = request.POST.get('platform')
@@ -239,3 +239,15 @@ https://www.sliderrevolution.com/resources/bootstrap-login-form/
 -------------------------------------------------------------------------- 
 뉴스 기사 layout 추가
 
+
+-------------------------------------------------------------------------- 
+
+영어 댓글 수 추이 추가
+
+
+-------------------------------------------------------------------------- 
+한글 중요/유사 키워드 Top10  추가
+
+
+
+-------------------------------------------------------------------------- 

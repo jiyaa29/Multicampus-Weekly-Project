@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load pybo_filter %}
+{% block content %}
+<div class="container my-3">
+    <h1> webtoon service summary</h1>
+
+    {% if lang == 'kr' %}
+    <h5> 한글 , {{platform}} , {{webtoon}} 분석을 시작합니다.</h5>
+    {% elif lang == 'en' %}
+    <h5> 영어 , {{platform}} , {{webtoon}} 분석을 시작합니다.</h5>
+    {% endif %}
+
+</div>
+
+<!-- Categories widget-->
+<div class="card mb-4">
+    <div class="card-header">Categories</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <ul class="list-unstyled mb-0">
+                    <h3>
+                        <li><a href="{% url 'webtoonitda:show_num_reviews' lang platform webtoon %}">
+                            전체 댓글 수 추이</a></li>
+                    </h3>
+                    <br>
+                    <h3>
+                        <li><a href="#!">전체 평점수 추이</a></li>
+                    </h3>
+                    <br>
+                    <h3>
+                        <li><a href="#!">전체 참여도수 추이</a></li>
+                    </h3>
+                    <br>
+                    <h3>
+                        <li><a href="#!">원본 댓글 추출</a></li>
+                    </h3>
+                    <br>
+
+                </ul>
+            </div>
+            <div class="col-sm-6">
+                <ul class="list-unstyled mb-0">
+                    <h3>
+                        <li><a href="{% url 'webtoonitda:get_best_episodes_by_reviews' lang platform webtoon %}">
+                            댓글 수 에피소드 Top10
+                            순위 Top10</a></li>
+                    </h3>
+                    <br>
+                    <h3>
+                        <li><a href="{% url 'webtoonitda:get_best_episodes' lang platform webtoon %}">
+                            평점수 에피소드 Top10</a></li>
+                    </h3>
+                    <br>
+                    <h3>
+                        <li><a href="#!">참여도수 에피소드 Top10</a></li>
+                    </h3>
+                    <br>
+
+                    <h3>
+                        <li><a href="{% url 'webtoonitda:show_keywords' lang platform webtoon %}">중요 / 유사 키워드 Top10</a></li>
+                    </h3>
+                    <br>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-3">
+    <a href="javascript:history.back();">뒤로가기</a>
+</div>
+
+
+<div class="col-sm-4 col-lg-3">
+
+</div>
+
+
+{% endblock %}
+{% block script %}
+<script type='text/javascript'>
+
+</script>
+{% endblock %}

@@ -2,10 +2,22 @@
 {% load pybo_filter %}
 {% block content %}
 
+
+<style>
+h1 {
+    text-align: center;
+}
+
+.background{
+    background-color: white;
+    column-count : 2;
+}
+
+</style>
 <div class="container my-3">
     <div class="row my-3">
         <div class="col-6">
-            <h2> 에피소드별 댓글 추이</h2>
+            <h2> 중요/유사 키워드 Top10 </h2>
             {% if lang == 'kr' %}
             <h5> 한글 , {{platform}} , {{webtoon}} 분석을 시작합니다.</h5>
             {% elif lang == 'en' %}
@@ -23,22 +35,25 @@
 
 {{ df|safe}}
 
-<div>
+<div class="row">
     {% if lang == 'kr' %}
-<!--    <h2> 한글</h2>-->
-    <img src="/media/kr_num_reviews.png"/>
-    {% elif lang == 'en' %}
-<!--    <h2> 영어</h2>-->
-    <img src="/media/en_num_reviews.png"/>
-    {% endif %}
+    <div class="background">
+        <div class="col-6">
+            <img src="/media/Review_top10_가로바차트_한글.png" style="width: auto; height: auto;"/>
+        </div>
+
+        <div class="col-6">
+            <img src="/media/Review_top10_파이차트1_한글.png" style="width: auto; height: auto;"/>
+        </div>
+    </div>
+      {% elif lang == 'en' %}
 
 
+      {% endif %}
+    <div class="container my-3">
+        <a href="javascript:history.back();">뒤로가기</a>
+    </div>
 </div>
-
-<div class="container my-3">
-    <a href="javascript:history.back();">뒤로가기</a>
-</div>
-
 </form>
 
 {% endblock %}

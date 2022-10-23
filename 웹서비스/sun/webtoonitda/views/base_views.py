@@ -19,17 +19,13 @@ def index(request):
     else:
         return render(request, 'common/login.html')
 
-def webtoon_summary(request):
+def service_summary(request):
     if request.method == 'POST':
-        print("webtoon_summary POST")
+        print("service_summary POST")
 
         lang = request.POST.get('lang')
         platform = request.POST.get('platform')
         webtoon = request.POST.get('webtoon')
-
-        print("webtoon_summary lang: " + lang)
-        print("webtoon_summary platform: " + platform)
-        print("webtoon_summary webtoon: " + webtoon)
 
         # db 생성
         # Webtoon.objects.create(lang=lang, platform=platform, webtoon=webtoon)
@@ -39,22 +35,17 @@ def webtoon_summary(request):
             'platform': platform,
             'webtoon': webtoon,
         } # 템플릿에 전달할 데이터를 세팅할 수 있는 오브젝트
-        return render(request, 'webtoonitda/webtoon_summary.html', context)
+        return render(request, 'webtoonitda/service_summary.html', context)
 
 def show_num_reviews(request, lang, platform, webtoon):
-
-    print("show_num_reviews lang: " + lang)
-    print("show_num_reviews platform: " + platform)
-    print("show_num_reviews webtoon: " + webtoon)
-
-    context = {'df': 'num_reviews'}
+    context = {
+        'lang': lang,
+        'platform': platform,
+        'webtoon': webtoon,
+    }  # 템플릿에 전달할 데이터를 세팅할 수 있는 오브젝트
     return render(request, 'webtoonitda/show_num_reviews.html', context)
 
 def get_best_episodes_by_reviews(request, lang, platform, webtoon):
-
-    print("get_best_episodes_by_reviews lang: " + lang)
-    print("get_best_episodes_by_reviews platform: " + platform)
-    print("get_best_episodes_by_reviews webtoon: " + webtoon)
 
     print(os.getcwd())
 
@@ -75,12 +66,21 @@ def get_best_episodes_by_reviews(request, lang, platform, webtoon):
     context = {'df': df[:10].to_html(justify='center')}
     return render(request, 'webtoonitda/show_best_episodes_by_reviews.html', context)
 
+def show_keywords(request, lang, platform, webtoon):
+
+    print("show_keywordss lang: " + lang)
+    print("show_keywordss platform: " + platform)
+    print("show_keywordss webtoon: " + webtoon)
+
+    context = {
+        'lang': lang,
+        'platform': platform,
+        'webtoon': webtoon,
+    }  # 템플릿에 전달할 데이터를 세팅할 수 있는 오브젝트
+
+    return render(request, 'webtoonitda/show_keywords.html', context)
+
 def get_best_episodes(request, lang, platform, webtoon):
-
-    print("get_best_episodes lang: " + lang)
-    print("get_best_episodes platform: " + platform)
-    print("get_best_episodes webtoon: " + webtoon)
-
     # 1. 동적으로 크롤링하여 결과 보여주기
     chromedriver_path = 'c:\Temp\chromedriver.exe'
     titleId = get_webtoon_titleId(chromedriver_path, platform, lang, webtoon)

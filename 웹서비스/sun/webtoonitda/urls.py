@@ -10,9 +10,12 @@ urlpatterns = [
     #path('', base_views.index, name='index'),
 
     path('index/', base_views.index, name='index'),  # http://127.0.0.1:8000/webtoonitda/index
-    path('webtoon_summary/', base_views.webtoon_summary, name='webtoon_summary'),
+    path('service_summary/', base_views.service_summary, name='service_summary'),
 
     path('show_num_reviews/<str:lang>/<str:platform>/<str:webtoon>', base_views.show_num_reviews, name="show_num_reviews"),
     path('get_best_episodes_by_reviews/<str:lang>/<str:platform>/<str:webtoon>', base_views.get_best_episodes_by_reviews, name="get_best_episodes_by_reviews"),
     path('get_best_episodes/<str:lang>/<str:platform>/<str:webtoon>', base_views.get_best_episodes, name="get_best_episodes"),
-  ]
+
+    path('show_keywords/<str:lang>/<str:platform>/<str:webtoon>', base_views.show_keywords, name="show_keywords"),
+
+]

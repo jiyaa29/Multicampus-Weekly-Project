@@ -10,10 +10,8 @@ h1 {
 .card-title{
     font-size: 30px; font-weight: bolder;  color: white;
 }
-
-
-
 </style>
+
 <div class="container my-3">
     <h1> webtoonitda에 오신 것을 환영합니다!</h1>
 </div>
@@ -21,7 +19,7 @@ h1 {
 <div class="row">
     <div class="col-3">
         <!--        Search section-->
-        <form action="{% url 'webtoonitda:webtoon_summary' %}" method="POST">
+        <form action="{% url 'webtoonitda:service_summary' %}" method="POST">
             {% csrf_token %}
             <div class="card mb-4">
                 <div class="card-header">Search</div>
