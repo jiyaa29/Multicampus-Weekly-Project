@@ -17,5 +17,6 @@ urlpatterns = [
     path('get_best_episodes/<str:lang>/<str:platform>/<str:webtoon>', base_views.get_best_episodes, name="get_best_episodes"),
 
     path('show_keywords/<str:lang>/<str:platform>/<str:webtoon>', base_views.show_keywords, name="show_keywords"),
+    path('show_topic_keywords/<str:lang>/<str:platform>/<str:webtoon>', base_views.show_topic_keywords, name="show_topic_keywords"),
 
 ]

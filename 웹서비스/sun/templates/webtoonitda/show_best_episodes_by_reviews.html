@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container my-3">
-    <div class="row my-3">
+    <div class="row">
         <div class="col-6">
             {% if platform != 'naver' and webtoon != '전지적 독자 시점' %}
             <h2> 앗앗앗! {{webtoon}} 플랫폼 {{webtoon}}에 대해 아직 준비된 서비스가 없습니다.</h2>
@@ -11,12 +11,15 @@
             <h2> 에피소드별 댓글 추이</h2>
             {% if lang == 'kr' %}
             <h5> 한글 , {{platform}} , {{webtoon}} 분석 결과입니다.</h5>
+            <li> 프롤로그와 첫 화 에피소드에서 특별히 많은 댓글이 작성되었습니다. </li>
+            <li> 40화에서 특별히 높은 댓글 수가 발견됩니다. 더 자세한 분석이 필요합니다. </li>
             {% elif lang == 'en' %}
             <h5> 영어 , {{platform}} , {{webtoon}} 분석 결과입니다.</h5>
             {% endif %}
             {% endif %}
 
         </div>
+
     </div>
 
 
@@ -28,21 +31,54 @@
 
 <!--{{ df|safe}}-->
 
-<div>
+<div class="row">
+    <div class="col-9">
 
-    {% if lang == 'kr' %}
-    <!--    <h2> 한글</h2>-->
-    <img src="/media/kr_top10_num_reviews.png"/>
-    {% elif lang == 'en' %}
-    <!--    <h2> 영어</h2>-->
-    <img src="/media/en_top10_num_reviews.png"/>
-    {% else %}
-    <!--    <h2> 다른 언어</h2>-->
-    <h2> 앗! {{lang}}에 대해 아직 준비된 서비스가 없습니다.</h2>
-    {% endif %}
+        {% if lang == 'kr' %}
+        <!--    <h2> 한글</h2>-->
+        <img src="/media/kr_top10_num_reviews.png" style="max-width: 100%; height: auto;"/>
+        {% elif lang == 'en' %}
+        <!--    <h2> 영어</h2>-->
+        <img src="/media/en_top10_num_reviews.png"/>
+        {% else %}
+        <!--    <h2> 다른 언어</h2>-->
+        <h2> 앗! {{lang}}에 대해 아직 준비된 서비스가 없습니다.</h2>
+        {% endif %}
+
+    </div>
+
+      <div class="col-3">
+                <!--        Search section-->
+                <form action="{% url 'webtoonitda:service_summary' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="card mb-4">
+                        <div class="card-header">Search</div>
+                        <div class="card-body">
+
+                            <h5> 에피소드</h5>
+                            <div class="input-group">
+                                <select class="form-select" id="selectbox_webtoon" name="webtoon"
+                                        onchange="changeWebtoonSelect()">
+                                    <option value="" selected disabled>에피소드를 선택하세요</option>
+                                    <option value="0">프롤로그</option>
+                                    <option value="10">10화</option>
+                                    <option value="20">20화</option>
+                                    <option value="30">30화</option>
+                                    <option value="40">40화</option>
+                                    <option value=122">122화</option>
+
+                                </select>
+                                <button type="submit" class="btn btn-outline-secondary" onclick="clickStartAnalysis()">Go!
+                                </button>
+                            </div>
+
+                            <div id="result"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
 </div>
-
 <div class="container my-3">
     <a href="javascript:history.back();">뒤로가기</a>
 </div>

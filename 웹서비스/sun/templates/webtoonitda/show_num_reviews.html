@@ -10,7 +10,11 @@
             {% else %}
             <h2> 에피소드별 댓글 추이</h2>
             {% if lang == 'kr' %}
-            <h5> 한글 , {{platform}} , {{webtoon}} 분석 결과입니다.</h5>
+            <h5> 한글 , {{platform}} , {{webtoon}} 분석 결과입니다.  </h5>
+            <li> 한글독자와 영어독자들 사이의 댓글 개수가 에피소드마다 유사합니다.  </li>
+            <li> 한글독자들이 더 많은 댓글을 작성하였습니다. </li>
+            <li> 한글 영어 모두 시간이 지나면서 에피소드에 대한 댓글 수가 감소합니다. </li>
+
             {% elif lang == 'en' %}
             <h5> 영어 , {{platform}} , {{webtoon}} 분석 결과입니다.</h5>
             {% endif %}
@@ -32,7 +36,9 @@
 
     {% if lang == 'kr' %}
     <!--    <h2> 한글</h2>-->
-    <img src="/media/kr_num_reviews.png"/>
+<!--    <img src="/media/kr_iplot_num_reviews.png"/>-->
+    <img src="/media/kr_en_num_reviews.png"/>
+
     {% elif lang == 'en' %}
     <!--    <h2> 영어</h2>-->
     <img src="/media/en_num_reviews.png"/>

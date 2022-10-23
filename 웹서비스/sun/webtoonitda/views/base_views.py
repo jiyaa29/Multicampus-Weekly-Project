@@ -74,9 +74,9 @@ def get_best_episodes_by_reviews(request, lang, platform, webtoon):
 
 def show_keywords(request, lang, platform, webtoon):
 
-    print("show_keywordss lang: " + lang)
-    print("show_keywordss platform: " + platform)
-    print("show_keywordss webtoon: " + webtoon)
+    print("show_keywords lang: " + lang)
+    print("show_keywords platform: " + platform)
+    print("show_keywords webtoon: " + webtoon)
 
     context = {
         'lang': lang,
@@ -85,6 +85,21 @@ def show_keywords(request, lang, platform, webtoon):
     }  # 템플릿에 전달할 데이터를 세팅할 수 있는 오브젝트
 
     return render(request, 'webtoonitda/show_keywords.html', context)
+
+def show_topic_keywords(request, lang, platform, webtoon):
+
+    print("show_topic_keywords lang: " + lang)
+    print("show_topic_keywords platform: " + platform)
+    print("show_topic_keywords webtoon: " + webtoon)
+
+    context = {
+        'lang': lang,
+        'platform': platform,
+        'webtoon': webtoon,
+    }  # 템플릿에 전달할 데이터를 세팅할 수 있는 오브젝트
+
+    return render(request, 'webtoonitda/show_topic_keywords.html', context)
+
 
 def get_best_episodes(request, lang, platform, webtoon):
     # 1. 동적으로 크롤링하여 결과 보여주기

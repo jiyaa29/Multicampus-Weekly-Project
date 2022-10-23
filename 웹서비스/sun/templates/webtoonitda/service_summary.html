@@ -25,7 +25,7 @@
                 <ul class="list-unstyled mb-0">
                     <h3>
                         <li><a href="{% url 'webtoonitda:show_num_reviews' lang platform webtoon %}">
-                            전체 댓글 수 추이</a></li>
+                           에피소드별 댓글 추이</a></li>
                     </h3>
                     <br>
                     <h3>
@@ -47,8 +47,7 @@
                 <ul class="list-unstyled mb-0">
                     <h3>
                         <li><a href="{% url 'webtoonitda:get_best_episodes_by_reviews' lang platform webtoon %}">
-                            댓글 수 에피소드 Top10
-                            순위 Top10</a></li>
+                            댓글 수 에피소드 Top10</a></li>
                     </h3>
                     <br>
                     <h3>
@@ -62,10 +61,17 @@
                     <br>
 
                     <h3>
-                        <li><a href="{% url 'webtoonitda:show_keywords' lang platform webtoon %}">중요 / 유사 키워드 Top10</a>
+                        <li><a href="{% url 'webtoonitda:show_keywords' lang platform webtoon %}">중요 키워드 Top10</a>
                         </li>
                     </h3>
                     <br>
+
+                    <h3>
+                        <li><a href="{% url 'webtoonitda:show_topic_keywords' lang platform webtoon %}">Topic 유사 키워드 Top10</a>
+                        </li>
+                    </h3>
+                    <br>
+
                 </ul>
             </div>
         </div>

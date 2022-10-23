@@ -8,9 +8,9 @@
 #       format_version: '1.5'
 #       jupytext_version: 1.14.0
 #   kernelspec:
-#     display_name: nlp
+#     display_name: Python 3
 #     language: python
-#     name: nlp
+#     name: python3
 # ---
 
 # +
@@ -477,7 +477,6 @@ def show_num_reviews(df, lang, filepath):
         ax.set_ylabel('댓글수', fontsize = 20)
         ax.set_xlabel('에피소드', fontsize = 20)        
         plt.xticks(rotation=45)
-        plt.xticks(rotation=45)    
         ax.set_title('전지적 독자 시점 댓글 수', fontsize = 30)
     elif lang == 'en':
         ax.plot(df['Episode'], df['Num_reviews'], label = '에피소드별 댓글 수', marker='o')
@@ -485,6 +484,31 @@ def show_num_reviews(df, lang, filepath):
         ax.set_xlabel('Eposiode', fontsize = 20)
          
         ax.set_title("Omniscient Reader's Number of Reviews", fontsize = 30)   
+    plt.savefig(filepath)
+
+
+def show_both_num_reviews(df1, df2,lang, filepath):
+    plt.rc('font', family='NanumGothic')
+    plt.style.use('ggplot')
+    plt.rc('font', size=15)
+
+    fig = plt.figure(figsize=(20,10))
+    ax = fig.subplots()
+   
+    ax.plot(df2['Episode'], df2['Num_reviews'], label = 'The Number of Reviews per Episode', marker='o' ,color = 'green')
+    ax.set_ylabel('Number of Reviews', fontsize = 20)
+    ax.set_xlabel('Eposiode', fontsize = 20)         
+    ax.set_title("Omniscient Reader's Number of Reviews", fontsize = 30)   
+    
+    ax.plot(df1['Episode'], df1['Num_reviews'], label = '에피소드별 댓글 수', marker='o' ,color = 'red')
+    ax.set_ylabel('댓글수', fontsize = 20)
+    ax.set_xlabel('에피소드', fontsize = 20)        
+    plt.xticks(rotation=0)
+
+    plt.legend(loc ='best')
+    ax.set_title('전지적 독자 시점 댓글 수', fontsize = 30)
+    
+    
     plt.savefig(filepath)
 
 
@@ -650,12 +674,31 @@ if __name__=="__main__":
 #     filepath = RESULT_DIR + filename
     
 #     show_num_reviews(df,lang, filepath)
-    #####################댓글 개수 기반 top10 에피소드 구하기(한글)###############################
-    df = get_top10_num_reviews(chromedriver_path, platform, lang, title_id, num_episodes, USE_CSV_FILE)
 
-    filename = lang + '_top10_num_reviews.png'
+
+    filepath = "kr_전지적 독자 시점_num_reviews.csv"
+    df1 = pd.read_csv('./data/kr/'+filepath)
+    df1 = df1.drop(['Num_pages'], axis=1)
+
+    filepath = "en_Omniscient Reader_num_reviews.csv"
+    df2 = pd.read_csv('./data/en/'+filepath)
+    df2 = df2.drop(['Num_pages'], axis=1)        
+
+    RESULT_DIR = './result/'+lang+'/'
+    if not os.path.exists(RESULT_DIR):
+        os.makedirs(RESULT_DIR)  
+    filename = 'kr_en' + '_num_reviews.png'
     filepath = RESULT_DIR + filename
-    show_best_num_reviews(df, lang, filepath)
+    
+    
+    show_both_num_reviews(df1, df2,lang, filepath) # df1 한글 df2 영어
+    
+    #####################댓글 개수 기반 top10 에피소드 구하기(한글)###############################
+#     df = get_top10_num_reviews(chromedriver_path, platform, lang, title_id, num_episodes, USE_CSV_FILE)
+
+#     filename = lang + '_top10_num_reviews.png'
+#     filepath = RESULT_DIR + filename
+#     show_best_num_reviews(df, lang, filepath)
 
 #     filename = 'kr_iplot_num_reviews.png'
 #     filepath = RESULT_DIR + filename
@@ -684,7 +727,5 @@ if __name__=="__main__":
     #get_all_comments(chromedriver_path, lang, title_id, num_episodes, DATA_DIR)
     #merge_csv_files(DATA_DIR)
 # -
-
-
 
 
