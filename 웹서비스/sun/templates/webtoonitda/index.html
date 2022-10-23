@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {% load pybo_filter %}
 {% block content %}
+
+<style>
+h1 {
+  text-align: center;
+}
+</style>
 <div class="container my-3">
     <h1> webtoonitda에 오신 것을 환영합니다!</h1>
 </div>
@@ -203,6 +209,8 @@ function changeEpisodeSelect(){
     selectedEpisode = selectedText;
     result.innerHTML = selectedLang + ' ' + selectedPlatform + ' ' + selectedWebtoon +  ' ' +selectedEpisode + "을 선택하셨습니다."
 }
+
+
 
 
 
