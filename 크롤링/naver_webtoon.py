@@ -407,31 +407,26 @@ def get_point_participants(chromedriver_path, platform = 'naver', lang = 'kr', t
     return df
 
 
-# +
 def get_top10_num_reviews(chromedriver_path, platform, lang, titleId, num_episodes, USE_CSV_FILE):
     """
     댓글 개수가 높은 에피소드 top10을 반환하는 함수
     """    
     DATA_DIR = './data/'+lang+'/'
-    
-    if USE_CSV_FILE:    
-        print("Read csv file.")
+        
+    if USE_CSV_FILE:
+        print('USE_CSV_FILE')
         filepath = "kr_전지적 독자 시점_num_reviews.csv"
         df = pd.read_csv(DATA_DIR+filepath)
     else:
-        df = get_num_reviews(chromedriver_path, lang, titleId, num_episodes, DATA_DIR)    
+        print('get_top10_num_reviews')
+        df = get_num_reviews(chromedriver_path, lang, titleId, num_episodes, DATA_DIR)                     
     
-    df_top10 = df.sort_values(by=['Num_reviews', 'Episode'], ascending=False)
-    df_top10 = df_top10.drop(['Num_pages'], axis=1) 
-    df_top10 = df_top10.set_index(keys= 'Episode', drop=True)
+    df_top10 = df.drop(['Num_pages'], axis=1) 
+    df_top10 = df.sort_values(by='Num_reviews', ascending=False)
+    
     print(df_top10[:10])
-    
-#     for i in range(10):
-#         print(df_top10['Episode'][i], df_top10['Num_reviews'][i])
     return df_top10[:10]
 
-
-# -
 
 def get_num_reviews(chromedriver_path, lang, title_id, num_episodes, DATA_DIR):
     """
@@ -483,9 +478,8 @@ def show_num_reviews(df, lang, filepath):
     elif lang == 'en':
         ax.plot(df['Episode'], df['Num_reviews'], label = '에피소드별 댓글 수', marker='o')
         ax.set_ylabel('Number of Reviews', fontsize = 20)
-        ax.set_xlabel('Eposiode', fontsize = 20)        
-#         plt.xticks(rotation=90)
-#         plt.xticks(rotation=90)            
+        ax.set_xlabel('Eposiode', fontsize = 20)
+         
         ax.set_title("Omniscient Reader's Number of Reviews", fontsize = 30)   
     plt.savefig(filepath)
 
@@ -542,20 +536,19 @@ def show_iplot_best_num_reviews(df,filepath):
     fig.show()
 
 
-def show_best_num_reviews(top10, filepath):
+def show_best_num_reviews(top10, lang, filepath):
     """
     가로막대바 시각화
     """    
-    top10.plot(kind='bar', color='cornflowerblue', width=0.5, figsize=(10,10),fontsize=20 )
+    top10[:10].plot(kind='bar', color='cornflowerblue', width=0.5, figsize=(10,10),fontsize=20 )
     plt.style.use('ggplot')
     plt.title('전지적 독자 시점 댓글 수 top10 에피소드', fontsize=30 , loc ='center', pad=20)
-    # plt.legend(loc='best')
+     plt.legend(loc='best')
     plt.xlabel('에피소드', size = 15)
     plt.ylabel('댓글수', size = 15)
-    plt.xticks(rotation=45)
+    plt.xticks(rotation=0)
     
-    plt.savefig(filepath, dpi = 100)
-    
+    plt.savefig(filepath, dpi = 100)    
     plt.show()
 
 
@@ -648,16 +641,11 @@ if __name__=="__main__":
     
 #     show_num_reviews(df,lang, filepath)
     #####################댓글 개수 기반 top10 에피소드 구하기(한글)###############################
-#     if USE_CSV_FILE:
-#         filepath = "kr_전지적 독자 시점_num_reviews.csv"
-#         df = pd.read_csv(DATA_DIR+filepath)
-#         df = df.drop(['Num_pages'], axis=1)
-#     else:
-#         df = get_num_reviews(chromedriver_path, lang, title_id, int(num_episodes), DATA_DIR)    
-    
-#     filename = 'kr_num_reviews.png'
-#     filepath = RESULT_DIR + filename
-#     show_num_reviews(df,filepath)
+    df = get_top10_num_reviews(chromedriver_path, platform, lang, title_id, num_episodes, USE_CSV_FILE)
+
+    filename = lang + '_top10_num_reviews.png'
+    filepath = RESULT_DIR + filename
+    show_best_num_reviews(df_top10, lang, filepath)
 
 #     filename = 'kr_iplot_num_reviews.png'
 #     filepath = RESULT_DIR + filename
@@ -686,9 +674,6 @@ if __name__=="__main__":
     #get_all_comments(chromedriver_path, lang, title_id, num_episodes, DATA_DIR)
     #merge_csv_files(DATA_DIR)
 # -
-lang = 'en'
-show_num_reviews(df,lang, filepath)
-
 
 
 
