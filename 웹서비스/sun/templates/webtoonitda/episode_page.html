@@ -2,19 +2,21 @@
 {% load pybo_filter %}
 {% block content %}
 <div class="container my-3">
-
     <h1> episode page</h1>
     <h1>  {{episode}}  분석을 시작합니다.</h1>
-<!--    {% if platform != 'naver' and webtoon != '전지적 독자 시점' %}-->
-<!--         <h2> 앗앗앗! {{webtoon}}에 대해 아직 준비된 서비스가 없습니다.</h2>-->
-<!--    {% else %}-->
-
-
-
-<!--    {% endif %}-->
-
 </div>
 
+<div>
+    <img src="/media/kr_episode_24_top10_word_cloud.png"/>
+</div>
+
+<div>
+    <img src="/media/kr_episode_24_top10_barh.png"/>
+</div>
+
+<div>
+    <img src="/media/kr_episode_24_top10_piechart1.png"/>
+</div>
 
 <div class="container my-3">
     <a href="javascript:history.back();">뒤로가기</a>
