@@ -2,22 +2,21 @@
 {% load pybo_filter %}
 {% block content %}
 <div class="container my-3">
-    <h1> episode page</h1>
-    <h1>  {{episode}}  분석을 시작합니다.</h1>
+    <h1> 에피소드 {{episode}}화 분석 결과입니다.</h1>
 </div>
 
- {% if episode == '23' %}
+ {% if episode == '27' %}
 
 <div>
-    <img src="/media/kr/kr_episode_24_top10_word_cloud.png"/>
-</div>
-
-<div>
-    <img src="/media/kr/kr_episode_24_top10_barh.png"/>
+    <img src="/media/kr/kr_episode_27_top10_word_cloud.png"/>
 </div>
 
 <div>
-    <img src="/media/kr/kr_episode_24_top10_piechart1.png"/>
+    <img src="/media/kr/kr_episode_27_top10_barh.png"/>
+</div>
+
+<div>
+    <img src="/media/kr/kr_episode_27_top10_piechart1.png"/>
 </div>
 
 {% else %}
