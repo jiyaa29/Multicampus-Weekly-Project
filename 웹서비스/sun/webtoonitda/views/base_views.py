@@ -64,7 +64,7 @@ def get_best_episodes_by_reviews(request, lang, platform, webtoon):
     # titleId = get_webtoon_titleId(chromedriver_path, platform, lang, webtoon)
     # print("titleId: " + str(titleId))
 
-    DATA_DIR = os.getcwd() + "/media/"
+    DATA_DIR = os.getcwd() + "/media/kr/"
     USE_CSV_FILE = True
 
     title_id, num_episodes = get_titleId_num_episodes(chromedriver_path, platform, lang, webtoon, USE_CSV_FILE)

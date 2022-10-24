@@ -6,17 +6,24 @@
     <h1>  {{episode}}  분석을 시작합니다.</h1>
 </div>
 
+ {% if episode == '23' %}
+
 <div>
-    <img src="/media/kr_episode_24_top10_word_cloud.png"/>
+    <img src="/media/kr/kr_episode_24_top10_word_cloud.png"/>
 </div>
 
 <div>
-    <img src="/media/kr_episode_24_top10_barh.png"/>
+    <img src="/media/kr/kr_episode_24_top10_barh.png"/>
 </div>
 
 <div>
-    <img src="/media/kr_episode_24_top10_piechart1.png"/>
+    <img src="/media/kr/kr_episode_24_top10_piechart1.png"/>
 </div>
+
+{% else %}
+
+<h2> 앗! {{episode}}에 대해 아직 준비된 서비스가 없습니다.</h2>
+{% endif %}
 
 <div class="container my-3">
     <a href="javascript:history.back();">뒤로가기</a>

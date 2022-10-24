@@ -291,7 +291,7 @@ def get_num_pages(driver, lang = 'kr', titleId = 747269, episode_no = 1):
 
 
 def get_titleId_num_episodes(chromedriver_path, platform, lang, webtoon, USE_CSV_FILE):
-    DATA_DIR = os.getcwd() + "/media/"
+    DATA_DIR = os.getcwd() + "/media/kr/"
 
     if USE_CSV_FILE:
         print("Read csv file")
@@ -411,7 +411,7 @@ def get_top10_num_reviews(chromedriver_path, platform, lang, titleId, num_episod
     """
     댓글 개수가 높은 에피소드 top10을 반환하는 함수
     """
-    DATA_DIR = os.getcwd() + "/media/"
+    DATA_DIR = os.getcwd() + "/media/kr/"
 
     if USE_CSV_FILE:    
         print("Read csv file.")
@@ -438,7 +438,7 @@ def get_top10_num_reviews(chromedriver_path, platform, lang, titleId, num_episod
     if USE_CSV_FILE:
         print("Read csv file.")
         DATA_DIR = os.getcwd()
-        filepath = DATA_DIR + "/media/kr_전지적 독자 시점_num_reviews.csv"
+        filepath = DATA_DIR + "/media/kr/kr_전지적 독자 시점_num_reviews.csv"
         df = pd.read_csv(filepath)
     else:
         df = get_num_reviews(chromedriver_path, lang, titleId, num_episodes, DATA_DIR)
