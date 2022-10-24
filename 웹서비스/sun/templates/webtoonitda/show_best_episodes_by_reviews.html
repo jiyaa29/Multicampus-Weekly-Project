@@ -48,8 +48,8 @@
     </div>
 
     <div class="col-3">
-        <!--        Search section-->
-        <form action="{% url 'webtoonitda:service_summary' %}" method="POST">
+        <!-- Episode selection section-->
+        <form action="{% url 'webtoonitda:episode_page'%}" method="POST">
             {% csrf_token %}
             <div class="card mb-4">
                 <div class="card-header">Search</div>
@@ -62,10 +62,10 @@
                         function dropDown(){
                         var start = 1;
                         var end = 125;
-                        document.write('<select class="form-select" id="selectbox_webtoon" name="webtoon" onchange="changeWebtoonSelect()">');
+                        document.write('<select class="form-select" id="selectbox_webtoon" name="episode" onchange="changeWebtoonSelect()">');
                         document.write('<option value="" selected disabled>에피소드를 선택하세요</option>');
                         for (var i = start ; i <= end; i++)
-                            document.write('<option value="' + i + '">' + i + '화</option>');
+                            document.write('<option value="' + i + '">' + i + '</option>');
                             document.write("</select>");
                         }
                         dropDown();
@@ -74,7 +74,7 @@
 
                         {% endblock %}
 
-                        <button type="submit" class="btn btn-outline-secondary" onclick="clickStartAnalysis()">Go!
+                        <button type="submit" class="btn btn-outline-secondary" onclick="clickStartEpisodeAnalysis()">Go!
                         </button>
                     </div>
 

@@ -19,6 +19,16 @@ def index(request):
     else:
         return render(request, 'common/login.html')
 
+def episode_page(request):
+    if request.method == 'POST':
+        episode = request.POST.get('episode')
+        print("episode " + str(episode) + "를 분석합니다.")
+
+        context = {
+            'episode': str(episode)
+        } # 템플릿에 전달할 데이터를 세팅할 수 있는 오브젝트
+        return render(request, 'webtoonitda/episode_page.html', context)
+
 def service_summary(request):
     if request.method == 'POST':
         print("service_summary POST")
