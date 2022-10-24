@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load pybo_filter %}
+{% block content %}
+
+<div class="container my-3">
+    <div class="row my-3">
+        <div class="col-6">
+            <h1> 누가 누가 주인공일까?</h1>
+        </div>
+    </div>
+
+
+</div>
+<form id="searchForm" method="get" action="{% url 'webtoonitda:index' %}">
+    <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
+    <input type="hidden" id="page" name="page" value="{{ page }}">
+</form>
+
+{{ df|safe}}
+
+<div>
+
+    <img src="/media/kr/누가 누가 주인공일까.png"/>
+
+</div>
+
+<div class="container my-3">
+    <a href="javascript:history.back();">뒤로가기</a>
+</div>
+
+</form>
+
+{% endblock %}

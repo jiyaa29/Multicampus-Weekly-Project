@@ -19,6 +19,11 @@ def index(request):
     else:
         return render(request, 'common/login.html')
 
+def show_similarity(request):
+    print("show_similarity")
+    return render(request, 'webtoonitda/show_similarity.html')
+
+
 def episode_page(request):
     if request.method == 'POST':
         episode = request.POST.get('episode')

@@ -13,11 +13,12 @@ urlpatterns = [
     path('service_summary/', base_views.service_summary, name='service_summary'),
 
     path('show_num_reviews/<str:lang>/<str:platform>/<str:webtoon>', base_views.show_num_reviews, name="show_num_reviews"),
-    path('get_best_episodes_by_reviews/<str:lang>/<str:platform>/<str:webtoon>', base_views.get_best_episodes_by_reviews, name="get_best_episodes_by_reviews"),
-    path('get_best_episodes/<str:lang>/<str:platform>/<str:webtoon>', base_views.get_best_episodes, name="get_best_episodes"),
+    path('show_best_episodes_by_reviews/<str:lang>/<str:platform>/<str:webtoon>', base_views.show_best_episodes_by_reviews, name="show_best_episodes_by_reviews"),
+    path('show_best_episodes/<str:lang>/<str:platform>/<str:webtoon>', base_views.show_best_episodes, name="show_best_episodes"),
 
     path('show_keywords/<str:lang>/<str:platform>/<str:webtoon>', base_views.show_keywords, name="show_keywords"),
     path('show_topic_keywords/<str:lang>/<str:platform>/<str:webtoon>', base_views.show_topic_keywords, name="show_topic_keywords"),
 
+    path('show_similarity', base_views.show_similarity, name="show_similarity"),
     path('episode_page', base_views.episode_page,name="episode_page"),
 ]
