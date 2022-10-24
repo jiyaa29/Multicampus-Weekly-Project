@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% load pybo_filter %}
 {% block content %}
+<!--<style>-->
+<!--    h2 { text-align: center; }-->
+<!--    h3 { text-align: right; }-->
+<!--    h4 { text-align: left; }-->
+<!--</style>-->
 
 <div class="container my-3">
     <div class="row">
@@ -8,13 +13,17 @@
             {% if platform != 'naver' and webtoon != '전지적 독자 시점' %}
             <h2> 앗앗앗! {{webtoon}} 플랫폼 {{webtoon}}에 대해 아직 준비된 서비스가 없습니다.</h2>
             {% else %}
-            <h2> 에피소드별 댓글 추이</h2>
+            <h2> 댓글수 에피소드 Top10</h2>
             {% if lang == 'kr' %}
-            <h5> 한글 , {{platform}} , {{webtoon}} 분석 결과입니다.</h5>
-            <li> 프롤로그와 첫 화 에피소드에서 특별히 많은 댓글이 작성되었습니다.</li>
-            <li> 40화에서 특별히 높은 댓글 수가 발견됩니다. 더 자세한 분석이 필요하시면 에피소드를 선택하세요.</li>
+            <h5> 한글 , {{platform}} , {{webtoon}} 분석 결과입니다.</h5><br>
+
+            <h5><li> 프롤로그와 첫 화 에피소드에서 특별히 많은 댓글이 작성되었습니다.</li></h5>
+            <h5><li> 40화에서 특별히 높은 댓글 수가 발견됩니다. </li></h5>
+            <h5><li> 더 자세한 분석이 필요하시면 에피소드를 선택하세요.</li></h5>
+
             {% elif lang == 'en' %}
-            <h5> 영어 , {{platform}} , {{webtoon}} 분석 결과입니다.</h5>
+
+            <h5> 영어 , {{platform}} , {{webtoon}} 분석 결과입니다.</h5><br>
             {% endif %}
             {% endif %}
 
@@ -86,7 +95,9 @@
 
 </div>
 <div class="container my-3">
-    <a href="javascript:history.back();">뒤로가기</a>
+<div class="d-grid gap-2">
+  <button onclick="javascript:history.back();" class="btn btn-lg btn-danger" type="button">뒤로가기</button>
+</div>
 </div>
 
 </form>

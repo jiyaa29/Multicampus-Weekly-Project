@@ -1,12 +1,13 @@
 import logging
 import os
 
+import pandas as pd
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
 from webtoonitda.models import Webtoon
 from webtoonitda.views.naver_webtoon import get_webtoon_titleId, get_top10_point_participants, get_top10_num_reviews, \
-    get_titleId_num_episodes
+    get_titleId_num_episodes, show_iplot_best_episodes_by_points, show_best_by_points
 
 logger = logging.getLogger('webtoonitda')
 
@@ -116,16 +117,49 @@ def show_topic_keywords(request, lang, platform, webtoon):
     return render(request, 'webtoonitda/show_topic_keywords.html', context)
 
 
-def show_best_episodes(request, lang, platform, webtoon):
-    # 1. 동적으로 크롤링하여 결과 보여주기
-    chromedriver_path = 'c:\Temp\chromedriver.exe'
-    titleId = get_webtoon_titleId(chromedriver_path, platform, lang, webtoon)
-    print("titleId: " + str(titleId))
-    df = get_top10_point_participants(chromedriver_path, platform, lang, titleId)
-    print("Done")
+def show_best_episodes_by_points(request, lang, platform, webtoon):
 
-    context = {'df': df[:10].to_html(justify='center')}
-    return render(request, 'webtoonitda/show_best_episodes.html', context)
+    USE_CSV_FILE = False
+
+    # 1. 동적으로 크롤링하여 결과 보여주기
+    DATA_DIR = os.getcwd() + "/media/kr/"
+    if USE_CSV_FILE:
+        # 저장된  csv 파일을 읽어온다.
+        df = pd.read_csv(DATA_DIR + 'kr_전지적 독자 시점_best_by_points.csv')
+    else:
+        # 크롤링 한다.
+        chromedriver_path = 'c:\Temp\chromedriver.exe'
+        titleId = get_webtoon_titleId(chromedriver_path, platform, lang, webtoon)
+        print("titleId: " + str(titleId))
+        df = get_top10_point_participants(chromedriver_path, platform, lang, titleId)
+        print("Done")
+
+        # 결과를 저장한다
+        df.to_csv(DATA_DIR + '{lang}_{webtoon}_best_by_points.csv'.format(lang=lang, webtoon=webtoon), index=False)
+        print("Saved.")
+
+    df = df.drop('Point', axis=1)
+    df = df.sort_values(by=['Participant'], ascending=False)
+
+    df_reverse = df.loc[::-1]
+
+    # 시각화 파일을 저장한다.
+    #filename = lang + '_'+ webtoon + '_best_episodes_by_points.png'
+    filename = "generated.png"
+    filepath = DATA_DIR + filename
+    show_best_by_points(df_reverse[:10], filepath, webtoon)
+
+    #filename = 'kr_iplot_best_episodes_by_points.png'
+    #df = df.set_index('Title')
+    #show_iplot_best_episodes_by_points(df_reverse, filename)
+
+    context = {
+        'df': df[:10].to_html(justify='center'),
+        'filename': filename,
+    }
+
+
+    return render(request, 'webtoonitda/show_best_episodes_by_points.html', context)
 
     # 2. csv 저장된 csv 파일에서 가져와서 보여주기
 
@@ -141,5 +175,5 @@ def show_best_episodes(request, lang, platform, webtoon):
     # all_episode = BestEpisodes.objects.all().order_by('-id')
 
     context = {'df': df[:10].to_html(justify='center')}
-    return render(request, 'webtoonitda/show_best_episodes.html', context)
+    return render(request, 'webtoonitda/show_best_episodes_by_points.html', context)
 

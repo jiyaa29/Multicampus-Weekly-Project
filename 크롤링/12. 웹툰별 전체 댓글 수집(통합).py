@@ -22,13 +22,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup as bs
 import requests
 import pandas as pd
-import re
-import matplotlib
-
-matplotlib.use('TkAgg')
-matplotlib.use('SVG')
 import matplotlib.pyplot as plt
-
 plt.rc('font', family='NanumGothic')
 import os
 import time
@@ -70,13 +64,8 @@ def get_webtoon_titleId(chromedriver_path, platform, lang, titleName):
     # chrome driver setting    
     service = Service(executable_path=chromedriver_path)
 
-    TIMEOUT = 1
-    # 크롤링 옵션 생성
-    options = webdriver.ChromeOptions()
-    # 백그라운드 실행 옵션 추가
-    options.add_argument("headless")
-
-    driver = webdriver.Chrome(service=service,chrome_options= options)
+    TIMEOUT = 1 
+    driver = webdriver.Chrome(service=service)  
     
     if platform == 'naver' and lang == 'kr':
         base_url = 'https://comic.naver.com/index' 
@@ -132,43 +121,42 @@ def get_webtoon_titleId(chromedriver_path, platform, lang, titleName):
     return titleId
 
 
-def get_num_episodes(chromedriver_path, platform='naver', lang='kr', titleId=747269):
+def get_num_episodes(chromedriver_path, platform = 'naver', lang = 'kr', titleId = 747269):
     import re
     """
     웹툰의 에피소드 개수를 구하는 함수
-    """
+    """    
     if lang == 'kr':
         print('titleId가 ', titleId, "인 웹툰의 episode 개수를 구합니다.")
     elif lang == 'en':
         print("Get the number of episodes of titleId, ", titleId)
-
-    # chrome driver setting
-    service = Service(executable_path=chromedriver_path)
-    TIMEOUT = 1
+        
+    # chrome driver setting    
+    service = Service(executable_path=chromedriver_path)    
+    TIMEOUT = 1 
     driver = webdriver.Chrome(service=service)
-
+    
     if platform == 'naver' and lang == 'kr':
         base_url = 'https://comic.naver.com/webtoon/list?' + 'titleId=' + str(titleId)
-    elif platform == 'naver' and lang == 'en':
+    elif platform == 'naver' and lang == 'en':    
         base_url = 'https://www.webtoons.com/en/action/omniscient-reader/list?' + 'title_no=' + str(titleId)
-
+        
     print(base_url)
     driver.get(base_url)
-    driver.implicitly_wait(TIMEOUT)
-
+    driver.implicitly_wait(TIMEOUT)   
+       
     # Get the total number of pages
     if lang == 'kr':
         pages = driver.find_element(by=By.CSS_SELECTOR, value="td.title > a")
         first = pages.text.split('. ')[0]
         num_episodes = re.sub(r'[^0-9]', '', first)  # 25화 토익      18화. 돌아온 봉지은 2   124. Ep. 23 버려진 세계 (8)
-        num_episodes = int(num_episodes)
         print(num_episodes)
-
-    elif lang == 'en':
+        
+    elif lang == 'en':  
         element = driver.find_element(by=By.CSS_SELECTOR, value="li._episodeItem")
         num_episodes = int(element.get_attribute("data-episode-no"))
         print("num_episodes:", num_episodes)
-
+        
     driver.quit()
     return num_episodes
 
@@ -308,13 +296,12 @@ def get_num_pages(driver, lang = 'kr', titleId = 747269, episode_no = 1):
     return num_pages
 
 
-def get_titleId_num_episodes(chromedriver_path, platform, lang, webtoon, USE_CSV_FILE):
-    DATA_DIR = os.getcwd() + "/media/"+lang+"/"
-
+def get_titleId_num_episodes(DATA_DIR, chromedriver_path, platform, lang, webtoon, USE_CSV_FILE):
+       DATA_DIR = './data/'+lang+'/'
     if USE_CSV_FILE:
-        print("Read csv file")
-        filepath = DATA_DIR + "kr_전지적 독자 시점_titleId_num_episodes.csv"
-        df = pd.read_csv(filepath)
+        print("Read csv file.")
+        filepath = "kr_전지적 독자 시점_titleId_num_episodes.csv"
+        df = pd.read_csv(DATA_DIR+filepath) 
         title_id = df['TitleId']
         num_episodes = df['Num_episodes']
     else:
@@ -350,50 +337,9 @@ def get_top10_point_participants(chromedriver_path, platform = 'naver', lang = '
     
     for i in range(10):
         print(df_top10['Title'][i], df_top10['Point'][i], df_top10['Participant'][i])
-    return df_top10
-
-def show_iplot_best_episodes_by_points(df,filepath):
-    from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
-    import chart_studio.plotly as py
-    import plotly
-    import cufflinks as cf
-    import pandas as pd
-    import numpy as np
-
-    print(plt.style.available)
-    # plt.style.use('classic')
-
-    fig = df.iplot(kind='barh',
-                    labels = df.index,
-                    values="Participant", textinfo="percent+label",
-                    title= '!!!!!!!!전지적 독자 시점 평점수, 참여자수 top10 에피소드', hole = 0.5, asFigure=True,
-                    xTitle ='에피소드',
-                    yTitle ='댓글 수',
-                    color='green'
-                  )
-    fig.write_image(filepath)
-    #fig = plt.savefig(filepath, dpi=100)
-    print(filepath + " iplot plt.savefig Done.")
-    #fig.show()
+    return df_top10[:10]
 
 
-def show_best_by_points(top10, filepath, webtoon):
-    """
-    가로막대바 시각화
-    """
-    top10.plot(kind='barh', color='cornflowerblue', width=0.5, figsize=(10, 10), fontsize=20)
-    plt.style.use('ggplot')
-    plt.title( webtoon +' 참여자수 top10 에피소드', fontsize=30, loc='center', pad=20)
-
-    plt.xlabel('참여자수', size=15)
-    plt.ylabel('에피소드', size=15)
-
-    # fig = self.plt.figure(figsize=self.figsize)
-    fig = plt.savefig(filepath, dpi=100)
-    print(filepath + " plt.savefig Done.")
-
-
-    #plt.show()
 def get_point_participants(chromedriver_path, platform = 'naver', lang = 'kr', titleId = 747269):
     """
     에피소드별 별점과 참여자수를 구하는 함수
@@ -407,9 +353,6 @@ def get_point_participants(chromedriver_path, platform = 'naver', lang = 'kr', t
     TIMEOUT = 1
     options = webdriver.ChromeOptions()
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
-    # 백그라운드 실행 옵션 추가
-    options.add_argument("headless")
-
     driver = webdriver.Chrome(service=service, options=options)
 
     if platform == 'naver' and lang == 'kr':
@@ -426,7 +369,6 @@ def get_point_participants(chromedriver_path, platform = 'naver', lang = 'kr', t
         pages = driver.find_element(by=By.CSS_SELECTOR, value="td.title > a")
         first = pages.text.split('. ')[0]
         num_episodes = re.sub(r'[^0-9]', '', first)  # 25화 토익      18화. 돌아온 봉지은 2   124. Ep. 23 버려진 세계 (8)
-        num_episodes = int(num_episodes)
         print(num_episodes)
     
     # base_url 닫기
@@ -473,9 +415,9 @@ def get_point_participants(chromedriver_path, platform = 'naver', lang = 'kr', t
 def get_top10_num_reviews(chromedriver_path, platform, lang, titleId, num_episodes, USE_CSV_FILE):
     """
     댓글 개수가 높은 에피소드 top10을 반환하는 함수
-    """
-    DATA_DIR = os.getcwd() + "/media/"+lang+"/"
-
+    """    
+    DATA_DIR = './data/'+lang+'/'
+    
     if USE_CSV_FILE:    
         print("Read csv file.")
         filepath = DATA_DIR +"kr_전지적 독자 시점_num_reviews.csv"
@@ -493,27 +435,6 @@ def get_top10_num_reviews(chromedriver_path, platform, lang, titleId, num_episod
     return df_top10[:10]
 
 
-def get_top10_num_reviews(chromedriver_path, platform, lang, titleId, num_episodes, USE_CSV_FILE):
-    """
-    댓글 개수가 높은 에피소드 top10을 반환하는 함수
-    """
-    DATA_DIR = os.getcwd()
-    if USE_CSV_FILE:
-        print("Read csv file.")
-        filepath = DATA_DIR + "/media/" + lang +  "/kr_전지적 독자 시점_num_reviews.csv"
-        df = pd.read_csv(filepath)
-    else:
-
-        df = get_num_reviews(chromedriver_path, lang, titleId, num_episodes, DATA_DIR)
-
-    df_top10 = df.sort_values(by=['Num_reviews', 'Episode'], ascending=False)
-    df_top10 = df_top10.drop(['Num_pages'], axis=1)
-    df_top10 = df_top10.set_index(keys='Episode', drop=True)
-    print(df_top10[:10])
-
-    #     for i in range(10):
-    #         print(df_top10['Episode'][i], df_top10['Num_reviews'][i])
-    return df_top10[:10]
 # -
 
 def get_num_reviews(chromedriver_path, lang, title_id, num_episodes, DATA_DIR):
@@ -523,21 +444,13 @@ def get_num_reviews(chromedriver_path, lang, title_id, num_episodes, DATA_DIR):
     # DataFrame을 생성한다.
     df = pd.DataFrame(data=[], columns=['Episode','Num_pages','Num_reviews']) 
 
-
-
+    # Chrome driver setting    
     service = Service(executable_path=chromedriver_path)
     TIMEOUT = 1     
     
     for episode_no in range(1, num_episodes):
         # 하나의 에피소드의 페이지 수를 얻어온다.
-
-        # Chrome driver setting
-        # 크롤링 옵션 생성
-        options = webdriver.ChromeOptions()
-        # 백그라운드 실행 옵션 추가
-        options.add_argument("headless")
-
-        driver = webdriver.Chrome(service=service, chrome_options= options)
+        driver = webdriver.Chrome(service=service)   
         num_pages = get_num_pages(driver, lang, title_id, episode_no)
         driver.close()    
 
@@ -690,14 +603,12 @@ if __name__=="__main__":
     platform = 'naver'
     lang ='kr'
     if lang == 'kr':
-        webtoon = '전지적 독자 시점'
+        #webtoon = '전지적 독자 시점'
+        webtoon = '대학일기'
     elif lang == 'en':
         webtoon = 'Omniscient Reader'
         
-    DATA_DIR = './data/'+lang+'/'
-    USE_CSV_FILE = True
-
-    
+   
     DATA_DIR = './data/' + lang + '/'   
     if not os.path.exists(DATA_DIR):
         os.makedirs(DATA_DIR)
@@ -705,8 +616,8 @@ if __name__=="__main__":
 
     title_id, num_episodes = get_titleId_num_episodes(DATA_DIR, chromedriver_path, platform, lang, webtoon, USE_CSV_FILE)
 
-    df = get_top10_num_reviews(chromedriver_path, platform, lang, title_id, num_episodes, USE_CSV_FILE)
-    print("Done")
+#     df = get_top10_num_reviews(chromedriver_path, platform, lang, title_id, num_episodes, USE_CSV_FILE)
+#     print("Done")
 
     
     # 별점, 참여자수 구하기
@@ -750,8 +661,77 @@ if __name__=="__main__":
     #merge_csv_files(DATA_DIR)
 # -
 
+df.to_csv( DATA_DIR + '{lang}_{webtoon}_best_by_points.csv'.format(lang=lang, webtoon=webtoon), index = False)
+
+# +
+# 결과를 저장할 폴더를 만든다.
+DATA_DIR = './data/kr/'
+
+df = pd.read_csv(DATA_DIR + 'kr_전지적 독자 시점_best_by_points.csv')
+df = df.drop('Point', axis = 1)
+df= df.sort_values(by=['Participant'], ascending = False)
+df
+# -
+
+df_reverse = df.loc[::-1]
+# df = df.set_index('Title')
+df_reverse
 
 
+def show_best_by_points(top10, filepath):
+    """
+    가로막대바 시각화
+    """    
+    top10.plot(kind='barh', color='cornflowerblue', width=0.5, figsize=(10,10),fontsize=20 )
+    plt.style.use('ggplot')
+    plt.title('전지적 독자 시점 참여자수 top10 에피소드', fontsize=30 , loc ='center', pad=20)
 
+    plt.xlabel('에피소드', size = 15)
+    plt.ylabel('참여자수', size = 15)
+    
+    plt.savefig(filepath, dpi = 100)
+    
+    plt.show()
+
+
+def show_iplot_best_episodes_by_points(df,filepath):
+    from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
+    import chart_studio.plotly as py
+    import plotly
+    import cufflinks as cf
+    import pandas as pd
+    import numpy as np
+
+    print(plt.style.available)
+    # plt.style.use('classic')
+
+    fig = df.iplot(kind='barh',
+                    labels = df.index, 
+                    values="Participant", textinfo="percent+label",
+                    title= '전지적 독자 시점 평점수, 참여자수 top10 에피소드', hole = 0.5, asFigure=True,
+                    xTitle ='에피소드',
+                    yTitle ='댓글 수',
+                    color='green'             
+                  )
+    fig.write_image(filepath)
+    fig.show()
+
+
+df = df.set_index('Title')
+lang = 'kr'
+RESULT_DIR = './result/'+lang+'/'
+if not os.path.exists(RESULT_DIR):
+    os.makedirs(RESULT_DIR)  
+filename = 'kr_iplot_best_episodes_by_points.png'
+filepath = RESULT_DIR + filename   
+show_iplot_best_episodes_by_points(df,filename)
+
+lang = 'kr'
+RESULT_DIR = './result/'+lang+'/'
+if not os.path.exists(RESULT_DIR):
+    os.makedirs(RESULT_DIR)  
+filename = 'kr_iplot_best_episodes_by_points.png'
+filepath = RESULT_DIR + filename   
+show_best_by_points(df_reverse,filename)
 
 
