@@ -19,5 +19,6 @@ urlpatterns = [
     path('show_keywords/<str:lang>/<str:platform>/<str:webtoon>', base_views.show_keywords, name="show_keywords"),
 
 #윤지 작성
-    path('ep_review', base_views.ep_review, name='ep_review')
+    path('ep_review', base_views.ep_review, name='ep_review'),
+    path('ep_search', base_views.ep_search, name='ep_search'),
 ]

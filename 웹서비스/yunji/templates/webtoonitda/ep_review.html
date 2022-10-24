@@ -6,13 +6,13 @@
     <div class="row my-3">
         <div class="col-6">
             <h2> 에피소드 댓글 분석</h2>
+            <h5> 테스트 {{title}} </h5>
 
         </div>
     </div>
 
-<h5> 테스트 {{title}} </h5>
 
-<style>
+    <style>
 h1 {
     text-align: center;
 }
@@ -22,48 +22,49 @@ h1 {
     column-count : 2;
 }
 
-</style>
 
-<!--    키워드 검색 만들기-->
-<!--<div class="row" style="float:left;">-->
-<div>
-    <div class="row" >
-                <!-- 워드클라우드-->
-            <div class="card mb-4" >
+    </style>
+
+    <!--    키워드 검색 만들기-->
+    <!--<div class="row" style="float:left;">-->
+    <div>
+        <div class="row">
+            <!-- 워드클라우드-->
+            <div class="card mb-4">
                 <div class="card-header">전지적 독자 시점</div>
                 <div class="card-body">
                     <div class="row">
 
                         <h3> 21화 키워드 분석 </h3>
 
-                         <img src="/media/kr 전독시 EP 21(okt) size.jpg" style="width: auto; height: auto;"/>
+                        <img src="/media/kr 전독시 EP 21(okt) size.jpg" style="width: auto; height: auto;"/>
 
                     </div>
                 </div>
                 <!--        Search section-->
-            <form action="{% url 'webtoonitda:ep_review' %}" method="POST">
-                {% csrf_token %}
-                <div class="card mb-5">
-                    <div class="card-header">키워드를 입력하세요.</div>
-                    <div class="card-body">
+                <form action="{% url 'webtoonitda:ep_search' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="card mb-5">
+                        <div class="card-header">키워드를 입력하세요.</div>
+                        <div class="card-body">
 
-                        <form>
-                            <input type="text" name="title" value="title">
-                         </form>
+                            <form>
+                                <input type="text" name="title" value="title">
+                            </form>
 
-                        <br>
-                        <br>
-                        <button type="submit" class="btn btn-primary" >검색
-                        </button>
+                            <br>
+                            <br>
+                            <button type="submit" class="btn btn-primary">검색
+                            </button>
+                        </div>
+                        <div id="result"></div>
                     </div>
-                    <div id="result"></div>
-                </div>
-            </form>
+                </form>
             </div>
             <div class="col-3">
 
+            </div>
         </div>
-    </div>
 
 
         <div class="container my-3">

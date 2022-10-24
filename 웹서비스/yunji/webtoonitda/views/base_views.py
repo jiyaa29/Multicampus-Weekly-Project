@@ -115,37 +115,16 @@ def get_best_episodes(request, lang, platform, webtoon):
 
 #윤지
 def ep_review(request):
+  return render(request, 'webtoonitda/ep_review.html')
 
-      if request.method == 'POST':
-            print("test1 ep_review POST")
-            title = request.POST.get('title')
-            print("ep_review POST" + title)
+def ep_search(request):
+    if request.method == 'POST':
+          title = request.POST.get('title')
+          print("ep_review POST" + title)
 
-            # db 생성
-            # Webtoon.objects.create(lang=lang, platform=platform, webtoon=webtoon)
+          context = {
+              'title': title,
 
-            context = {
-                'title': title,
+          } # 템플릿에 전달할 데이터를 세팅할 수 있는 오브젝트
 
-            } # 템플릿에 전달할 데이터를 세팅할 수 있는 오브젝트
-            # return render(request, 'webtoonitda/ep_review.html',context)
-            return render(request, 'webtoonitda/ep_review.html',context)
-
-#
-# def service_summary(request):
-#     if request.method == 'POST':
-#         print("service_summary POST")
-#
-#         lang = request.POST.get('lang')
-#         platform = request.POST.get('platform')
-#         webtoon = request.POST.get('webtoon')
-#
-#         # db 생성
-#         # Webtoon.objects.create(lang=lang, platform=platform, webtoon=webtoon)
-#
-#         context = {
-#             'lang': lang,
-#             'platform': platform,
-#             'webtoon': webtoon,
-#         } # 템플릿에 전달할 데이터를 세팅할 수 있는 오브젝트
-#         return render(request, 'webtoonitda/service_summary.html', context)
+          return HttpResponse("ep_search keyword:" + title)
