@@ -55,7 +55,7 @@ def show_num_reviews(request, lang, platform, webtoon):
     }  # 템플릿에 전달할 데이터를 세팅할 수 있는 오브젝트
     return render(request, 'webtoonitda/show_num_reviews.html', context)
 
-def get_best_episodes_by_reviews(request, lang, platform, webtoon):
+def show_best_episodes_by_reviews(request, lang, platform, webtoon):
 
     print(os.getcwd())
 
@@ -111,7 +111,7 @@ def show_topic_keywords(request, lang, platform, webtoon):
     return render(request, 'webtoonitda/show_topic_keywords.html', context)
 
 
-def get_best_episodes(request, lang, platform, webtoon):
+def show_best_episodes(request, lang, platform, webtoon):
     # 1. 동적으로 크롤링하여 결과 보여주기
     chromedriver_path = 'c:\Temp\chromedriver.exe'
     titleId = get_webtoon_titleId(chromedriver_path, platform, lang, webtoon)
