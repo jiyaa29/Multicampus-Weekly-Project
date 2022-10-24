@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load pybo_filter %}
+{% block content %}
+
+<div class="container my-3">
+    <div class="row my-3">
+        <div class="col-6">
+            {% if platform != 'naver' and webtoon != '전지적 독자 시점' %}
+            <h2> 앗앗앗! {{webtoon}} 플랫폼 {{webtoon}}에 대해 아직 준비된 서비스가 없습니다.</h2>
+            {% else %}
+            <h2> 에피소드별 댓글 추이</h2>
+            {% if lang == 'kr' %}
+            <h5> 한글 , {{platform}} , {{webtoon}} 분석 결과입니다.</h5>
+            {% elif lang == 'en' %}
+            <h5> 영어 , {{platform}} , {{webtoon}} 분석 결과입니다.</h5>
+            {% endif %}
+            {% endif %}
+
+        </div>
+    </div>
+
+
+</div>
+<form id="searchForm" method="get" action="{% url 'webtoonitda:index' %}">
+    <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
+    <input type="hidden" id="page" name="page" value="{{ page }}">
+</form>
+
+{{ df|safe}}
+
+<div>
+
+    {% if lang == 'kr' %}
+    <!--    <h2> 한글</h2>-->
+    <img src="/media/kr_num_reviews.png"/>
+    {% elif lang == 'en' %}
+    <!--    <h2> 영어</h2>-->
+    <img src="/media/en_num_reviews.png"/>
+    {% else %}
+    <!--    <h2> 다른 언어</h2>-->
+    <h2> 앗! {{lang}}에 대해 아직 준비된 서비스가 없습니다.</h2>
+    {% endif %}
+
+</div>
+
+<div class="container my-3">
+    <a href="javascript:history.back();">뒤로가기</a>
+</div>
+
+</form>
+
+{% endblock %}
