@@ -521,8 +521,7 @@ def get_num_reviews(chromedriver_path, lang, title_id, num_episodes, DATA_DIR):
     에피소드별 댓글 개수를 구하는 함수
     """
     # DataFrame을 생성한다.
-    df = pd.DataFrame(data=[], columns=['Episode','Num_pages','Num_reviews']) 
-
+    df = pd.DataFrame(data=[], columns=['Episode','Num_pages','Num_reviews'])
 
 
     service = Service(executable_path=chromedriver_path)
