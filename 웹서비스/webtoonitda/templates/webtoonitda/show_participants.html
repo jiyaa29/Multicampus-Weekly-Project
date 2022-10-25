@@ -19,6 +19,11 @@
             {% elif lang == 'en' %}
             <h5> 영어 , {{platform}} , {{webtoon}} 분석을 시작합니다.</h5>
             {% endif %}
+
+            <h5> 한글 , {{platform}} , {{webtoon}} 분석 결과입니다.  </h5>
+            <li> 첫 프롤로그와 1화를 제외하고 105화에서 참여도가 급격히 높아졌습니다.  </li>
+            <li> 105화를 더 자세히 분석해보세요.</li>
+
         </div>
     </div>
 
@@ -30,12 +35,53 @@
 </form>
 
 
-<div class="background">
-{{df | safe}}
-</div>
+<div class="row">
+    <div class="col-9">
 <div>
     <img src="/media/kr/kr_전지적 독자 시점_participant.png"/>
 </div>
+    </div>
+    <div class="col-3">
+        <!-- Episode selection section-->
+        <form action="{% url 'webtoonitda:episode_page'%}" method="POST">
+            {% csrf_token %}
+            <div class="card mb-4">
+                <div class="card-header">Search</div>
+                <div class="card-body">
+
+                    <h5> 에피소드</h5>
+                    <div class="input-group">
+                        {% block script %}
+                        <script type='text/javascript'>
+                        function dropDown(){
+                        var start = 1;
+                        var end = 125;
+                        document.write('<select class="form-select" id="selectbox_webtoon" name="episode" onchange="changeWebtoonSelect()">');
+                        document.write('<option value="" selected disabled>에피소드를 선택하세요</option>');
+                        for (var i = start ; i <= end; i++)
+                            document.write('<option value="' + i + '">' + i + '</option>');
+                            document.write("</select>");
+                        }
+                        dropDown();
+
+                        </script>
+
+                        {% endblock %}
+
+                        <button type="submit" class="btn btn-primary" onclick="clickStartEpisodeAnalysis()">Go!
+                        </button>
+                    </div>
+
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
 
 <div class="container my-3">
     <div class="d-grid gap-2">

@@ -10,10 +10,10 @@
             {% else %}
             <h2> 에피소드별 댓글 추이</h2>
             {% if lang == 'kr' %}
-            <h5> 한글 , {{platform}} , {{webtoon}} 분석 결과입니다.  </h5>
-            <li> 한글 웹툰과 영어 웹툰 사이의 댓글 추이가 대체로 유사합니다.  </li>
+            <h5> 한글 , {{platform}} , {{webtoon}} 분석 결과입니다. </h5>
+            <li> 한글 웹툰과 영어 웹툰 사이의 댓글 추이가 대체로 유사합니다.</li>
             <li> 한글 독자들이 더 많은 댓글을 작성하고 있습니다.</li>
-            <li> 한글 영어 모두 시간이 지나면서 에피소드에 대한 댓글수가 감소합니다. </li>
+            <li> 한글 영어 모두 시간이 지나면서 에피소드에 대한 댓글수가 감소합니다.</li>
             <li> 특정 에피소드(40화)의 경우 댓글수가 갑자기 증가하였습니다.</li>
 
             {% elif lang == 'en' %}
@@ -33,27 +33,68 @@
 
 {{ df|safe}}
 
-<div>
+<div class="row">
+    <div class="col-9">
 
-    {% if lang == 'kr' %}
-    <!--    <h2> 한글</h2>-->
-<!--    <img src="/media/kr_iplot_num_reviews.png"/>-->
-    <img src="/media/kr/kr_en_num_reviews.png"/>
 
-    {% elif lang == 'en' %}
-    <!--    <h2> 영어</h2>-->
-    <img src="/media/en/en_num_reviews.png"/>
-    {% else %}
-    <!--    <h2> 다른 언어</h2>-->
-    <h2> 앗! {{lang}}에 대해 아직 준비된 서비스가 없습니다.</h2>
-    {% endif %}
+        {% if lang == 'kr' %}
+        <!--    <h2> 한글</h2>-->
+        <!--    <img src="/media/kr_iplot_num_reviews.png"/>-->
+        <img src="/media/kr/kr_en_num_reviews.png"/>
 
+        {% elif lang == 'en' %}
+        <!--    <h2> 영어</h2>-->
+        <img src="/media/en/en_num_reviews.png"/>
+        {% else %}
+        <!--    <h2> 다른 언어</h2>-->
+        <h2> 앗! {{lang}}에 대해 아직 준비된 서비스가 없습니다.</h2>
+        {% endif %}
+
+    </div>
+    <div class="col-3">
+        <!-- Episode selection section-->
+        <form action="{% url 'webtoonitda:episode_page'%}" method="POST">
+            {% csrf_token %}
+            <div class="card mb-4">
+                <div class="card-header">Search</div>
+                <div class="card-body">
+
+                    <h5> 에피소드</h5>
+                    <div class="input-group">
+                        {% block script %}
+                        <script type='text/javascript'>
+                        function dropDown(){
+                        var start = 1;
+                        var end = 125;
+                        document.write('<select class="form-select" id="selectbox_webtoon" name="episode" onchange="changeWebtoonSelect()">');
+                        document.write('<option value="" selected disabled>에피소드를 선택하세요</option>');
+                        for (var i = start ; i <= end; i++)
+                            document.write('<option value="' + i + '">' + i + '</option>');
+                            document.write("</select>");
+                        }
+                        dropDown();
+
+
+
+                        </script>
+
+                        {% endblock %}
+
+                        <button type="submit" class="btn btn-primary" onclick="clickStartEpisodeAnalysis()">Go!
+                        </button>
+                    </div>
+
+
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
 <div class="container my-3">
-<div class="d-grid gap-2">
-  <button onclick="javascript:history.back();" class="btn btn-lg btn-danger" type="button">뒤로가기</button>
-</div>
+    <div class="d-grid gap-2">
+        <button onclick="javascript:history.back();" class="btn btn-lg btn-danger" type="button">뒤로가기</button>
+    </div>
 </div>
 
 </form>
