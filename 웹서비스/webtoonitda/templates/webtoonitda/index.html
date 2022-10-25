@@ -1,0 +1,334 @@
+{% extends 'base.html' %}
+{% load pybo_filter %}
+{% block content %}
+
+<style>
+h1 {
+    text-align: center;
+}
+
+.card-title{
+    font-size: 30px; font-weight: bolder;  color: white;
+}
+
+</style>
+
+<div class="container my-3">
+    <h1> Welcome to webtoonitda!</h1>
+</div>
+
+<div class="row">
+    <div class="col-3">
+        <!--        Search section-->
+        <form action="{% url 'webtoonitda:service_summary' %}" method="POST">
+            {% csrf_token %}
+            <div class="card mb-4">
+                <div class="card-header">Search</div>
+                <div class="card-body">
+
+                    <h5> 플랫폼</h5>
+                    <div class="input-group">
+                        <select class="form-select" id="selectbox_platform" name="platform"
+                                onchange="changePlatformSelect()">
+                            <option value="" selected disabled>플랫폼을 선택하세요</option>
+                            <option value="naver">네이버웹툰</option>
+                            <option value="kakao">카카오웹툰</option>
+                            <option value="toomics">투믹스</option>
+                            <option value="toptoon">탑툰</option>
+                            <option value="kakaopage">카카오페이지</option>
+                            <option value="lezhin">레진코믹스</option>
+                            <option value="postype">포스타입</option>
+                            <option value="comico">코미코</option>
+                            <option value="yktoon">케이툰</option>
+                            <option value="mrblue">미스터블루</option>
+                        </select>
+
+                    </div>
+                    <br>
+                    <h5> 언어</h5>
+                    <div class="input-group">
+                        <select class="form-select" id="selectbox_lang" name="lang"
+                                onchange="changeLangSelect(this)">
+                            <option value="" selected disabled>언어를 선택하세요</option>
+                            <option value="kr">한글</option>
+                            <option value="en">영어</option>
+                            <option value="jp">일본어</option>
+                            <option value="ch">중국어</option>
+                            <option value="fr">프랑스어</option>
+                            <option value="ge">독일어</option>
+                        </select>
+                    </div>
+                    <br>
+                    <h5> 웹툰</h5>
+                    <div class="input-group">
+
+                        <select class="form-control" id="selectbox_webtoon" name="webtoon">
+                            <option value="" selected disabled>웹툰을 선택하세요</option>
+                        </select>
+
+                        <button type="submit" class="btn btn-primary" onclick="clickStartAnalysis()">Go!
+                        </button>
+                    </div>
+
+                    <br>
+                    <div id="result"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-5">
+        <!-- News post-->
+        <div class="card mb-4">
+            <div class="card-header">Latest News</div>
+            <!-- News1-->
+            <div class="card-body">
+                <div class="card-body">
+                    <div class="small_text-muted">December 6, 2021</div>
+                    <a href="https://edition.cnn.com/videos/tv/2016/04/04/south-korea-webtoons-hancocks-pkg.cnn"
+                       class="card-title">South Korean Webtoons Craze Goes Global</a>
+
+                    <a href="https://edition.cnn.com/videos/tv/2016/04/04/south-korea-webtoons-hancocks-pkg.cnn"><img
+                            class="card-img-top"
+                            src="/media/news1.jpg"
+                            alt="..."/></a>
+                </div>
+            </div>
+            <!-- News2-->
+            <div class="card-body">
+                <div class="card-body">
+                    <div class="small text-muted">January 20, 2021</div>
+                    <a href="https://publy.co/content/6123" class="card-title">미국에서도 통한, 네이버 웹툰의 무서운 성장세</a>
+                </div>
+                <a href="https://publy.co/content/6123"><img class="card-img-top" src="/media/news2.jpg"
+                                                             alt="..."/></a>
+            </div>
+            <!-- News3-->
+            <div class="card-body">
+                <div class="card-body">
+                    <div class="small text-muted">2019-09-04 12:33</div>
+                    <a href="https://www.etnews.com/20190904000118" class="card-title">[이슈분석]'K-웹툰' 매출 1조원 눈앞…만화 같은 '성장
+                        스토리'</a>
+                </div>
+                <a href="https://www.etnews.com/20190904000118"><img class="card-img-top"
+                                                                     src="/media/news3.jpg"
+                                                                     alt="..."/></a>
+            </div>
+            <!-- News4-->
+            <div class="card-body">
+                <div class="card-body">
+                    <div class="small text-muted"> 2021.03.16 14:00</div>
+                    <a href="https://www.sisajournal.com/news/articleView.html?idxno=213395" class="card-title">잠재 시장만
+                        100조원…K웹툰 新한류을
+                        이끌다</a>
+                </div>
+                <a href="https://www.sisajournal.com/news/articleView.html?idxno=213395"><img class="card-img-top"
+                                                                                              src="/media/news4.jpg"
+                                                                                              alt="..."/></a>
+            </div>
+
+            <!-- News5-->
+            <div class="card-body">
+                <div class="card-body">
+                    <div class="small text-muted"> 2021.03.16 14:00</div>
+                    <a href="https://koreancontent.kr/3754" class="card-title">비상하는 K-웹툰! 해외 만화시장 변동 및 국내 웹툰 수출 현황</a>
+                </div>
+                <a href="https://koreancontent.kr/3754"><img class="card-img-top"
+                                                             src="/media/news5.jpg"
+                                                             alt="..."/></a>
+            </div>
+            <!-- News6-->
+            <div class="card-body">
+                <div class="card-body">
+                    <div class="small text-muted">December 6, 2021</div>
+                    <a href="https://www.joongang.co.kr/article/25029536#home" class="card-title">‘웹툰’ 단어조차 없던 미국, 이젠
+                        네이버웹툰 월 이용자
+                        1400만명</a>
+                </div>
+                <a href="https://www.joongang.co.kr/article/25029536#home"><img class="card-img-top"
+                                                                                src="/media/news6.jpg"
+                                                                                alt="..."/></a>
+                <!-- Pagination-->
+                <ul class="pagination justify-content-center my-4">
+                    <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"
+                                                      aria-disabled="true">Newer</a></li>
+                    <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">3</a></li>
+                    <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">15</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">Older</a></li>
+                </ul>
+
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-4">
+        <!-- Categories widget-->
+        <div class="card border-primary">
+            <div class="card-header">Categories</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <ul class="list-unstyled mb-0">
+                            <li><a href="#!">플랫폼</a></li>
+                            <li><a href="#!">프러덕션 & 에이전시</a></li>
+                            <li><a href="#!">작품</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6">
+                        <ul class="list-unstyled mb-0">
+                            <li><a href="#!">작가 목록</a></li>
+                            <li><a href="#!">OSMU(One Source Multi Use)</a></li>
+                            <li><a href="#!">전문가 분석</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4주간 인기 순위 추이-->
+        <div class="card mb-4">
+            <div class="card-header">인기 순위 추이</div>
+            <div class="card-body">
+                <div class="row">
+
+                    <h3> 인기 순위 추이 </h3>
+
+                    <img src="/media/naver_rank_chart.png" style="width: auto; height: auto;"/>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+<section id="newsSection">
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="latest_newsarea"><span>Latest News</span>
+                <ul id="ticker01" class="news_sticker">
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My First News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Second News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Third News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Four News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Five News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Six News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Seven News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Eight News Item</a></li>
+                    <li><a href="#"><img src="images/news_thumbnail2.jpg" alt="">My Nine News Item</a></li>
+                </ul>
+                <div class="social_area">
+                    <ul class="social_nav">
+                        <li class="facebook"><a href="#"></a></li>
+                        <li class="twitter"><a href="#"></a></li>
+                        <li class="flickr"><a href="#"></a></li>
+                        <li class="pinterest"><a href="#"></a></li>
+                        <li class="googleplus"><a href="#"></a></li>
+                        <li class="vimeo"><a href="#"></a></li>
+                        <li class="youtube"><a href="#"></a></li>
+                        <li class="mail"><a href="#"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% block script %}
+<script type='text/javascript'>
+
+var selectedLang;
+var selectedPlatform;
+var selectedWebtoon;
+
+var result = document.getElementById("result");
+
+function clickStartAnalysis(){
+
+}
+
+function changePlatformSelect(){
+    var selected = document.getElementById("selectbox_platform");
+    var selectedText = selected.options[selected.selectedIndex].text;
+    //alert(selectedText + '을 선택하셨습니다.');
+    //result.innerHTML = selectedText + "를 선택하셨습니다."
+    selectedPlatform = selectedText;
+    result.innerHTML = selectedPlatform + "를 선택하셨습니다."
+}
+
+function changeLangSelect(e) {
+    var korean = ["전지적 독자 시점", "복학왕", "참교육", "외모지상주의", "연애혁명", "신의 탑", "마음의소리", "대학일기"];
+    var english = ["Omniscient Reader", "Bokagwang", "Get Schooled", "Lookism", "Love Revolution", "Tower of God", "The Sound of Your Heart", "College Diary"];
+    var japanese =  ["전지적 독자 시점", "복학왕", "참교육", "외모지상주의", "연애혁명", "신의 탑", "마음의소리", "대학일기"];
+
+    var target = document.getElementById("selectbox_webtoon");
+
+    if(e.value == "kr") var data = korean;
+    else if(e.value == "en") var data = english;
+    else var data = japanese;
+
+    target.options.length = 0;
+
+    for (x in data) {
+        var opt = document.createElement("option");
+        opt.value = data[x];
+        opt.innerHTML = data[x];
+        target.appendChild(opt);
+    }
+
+    var selected = document.getElementById("selectbox_lang");
+    var selectedText = selected.options[selected.selectedIndex].text;
+    selectedLang = selectedText;
+    result.innerHTML = selectedPlatform + ' ' + selectedLang + "를 선택하셨습니다."
+
+}
+
+function changeWebtoonSelect(){
+    var selected = document.getElementById("selectbox_webtoon");
+    var selectedText = selected.options[selected.selectedIndex].text;
+    //alert(selectedText + '을 선택하셨습니다.');
+    //result.innerHTML = selectedText + "를 선택하셨습니다."
+    selectedWebtoon = selectedText;
+    result.innerHTML = selectedPlatform + ' ' + selectedLang  + ' ' + selectedWebtoon + "을 선택하셨습니다."
+}
+
+function changeEpisodeSelect(){
+    var selected = document.getElementById("selectbox_episode");
+    var selectedText = selected.options[selected.selectedIndex].text;
+    //alert(selectedText + '을 선택하셨습니다.');
+    //result.innerHTML = selectedText + "를 선택하셨습니다."
+    selectedEpisode = selectedText;
+    result.innerHTML = selectedLang + ' ' + selectedPlatform + ' ' + selectedWebtoon +  ' ' +selectedEpisode + "을 선택하셨습니다."
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load pybo_filter %}
+{% block content %}
+
+
+<style>
+h1 {
+    text-align: center;
+}
+
+.background{
+    background-color: white;
+    column-count : 2;
+}
+.jb-text {
+    color: black;
+	padding: 5px 10px;
+	background-color: white;
+	text-align: center;
+	font-size : 20px;
+	position: absolute;
+	top: 50%;
+	left: 10%;
+	transform: translate( -50%, -50% );
+
+
+</style>
+<div class="container my-3">
+    <div class="row my-3">
+        <div class="col-6">
+            <h2> Topic 유사 키워드 Top10 </h2>
+            {% if lang == 'kr' %}
+            <h5> 한글 , {{platform}} , {{webtoon}} 분석을 시작합니다.</h5>
+            {% elif lang == 'en' %}
+            <h5> 영어 , {{platform}} , {{webtoon}} 분석을 시작합니다.</h5>
+            {% endif %}
+        </div>
+    </div>
+
+
+</div>
+<form id="searchForm" method="get" action="{% url 'webtoonitda:index' %}">
+    <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
+    <input type="hidden" id="page" name="page" value="{{ page }}">
+</form>
+
+{{ df|safe}}
+
+<div class="row">
+    {% if lang == 'kr' %}
+    <div class="background">
+
+        <div class="col-5">
+            <div class="jb-text">
+                <ul class="list-unstyled mb-0">
+<!--                    ['소설', '작가', '주인공', '원작', '연출', '작화', '스토리', '묘사', '퀄리티', '캐릭터']-->
+
+                    <li><a href="/media/kr/소설.html">소설</a></li>
+                    <li><a href="/media/kr/작가.html">작가</a></li>
+                    <li><a href="/media/kr/주인공.html">주인공</a></li>
+                    <li><a href="/media/kr/원작.html">원작</a></li>
+                    <li><a href="/media/kr/연출.html">연출</a></li>
+                    <li><a href="/media/kr/작화.html">작화</a></li>
+                    <li><a href="/media/kr/스토리.html">스토리</a></li>
+                    <li><a href="/media/kr/묘사.html">묘사</a></li>
+                    <li><a href="/media/kr/퀄리티.html">퀄리티</a></li>
+                    <li><a href="/media/kr/캐릭터.html">캐릭터</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <dif class="col-12">
+            <img src="/media/kr/스토리.png"/>
+        </dif>
+    </div>
+    {% elif lang == 'en' %}
+
+
+    {% endif %}
+<div class="container my-3">
+<div class="d-grid gap-2">
+  <button onclick="javascript:history.back();" class="btn btn-lg btn-danger" type="button">뒤로가기</button>
+</div>
+</div>
+</div>
+</form>
+
+{% endblock %}

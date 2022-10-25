@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load pybo_filter %}
+{% block content %}
+<div class="container my-3">
+    <h1> 에피소드 {{episode}}화 분석 결과입니다.</h1>
+</div>
+
+{% if episode == '24' %}
+
+<div>
+    <img src="/media/kr/kr_episode_24_top10_word_cloud.png"/>
+</div>
+
+<div>
+    <img src="/media/kr/kr_episode_24_top10_barh.png"/>
+</div>
+
+<div>
+    <img src="/media/kr/kr_episode_24_top10_piechart1.png"/>
+</div>
+
+{% else %}
+
+<h2> 앗! {{episode}}에 대해 아직 준비된 서비스가 없습니다.</h2>
+{% endif %}
+
+<div class="container my-3">
+    <div class="d-grid gap-2">
+        <button onclick="javascript:history.back();" class="btn btn-lg btn-danger" type="button">뒤로가기</button>
+    </div>
+</div>
+
+
+{% endblock %}
+{% block script %}
+<script type='text/javascript'>
+
+</script>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load pybo_filter %}
+{% block content %}
+
+
+<style>
+h1 {
+    text-align: center;
+}
+
+.background{
+    background-color: white;
+    column-count : 2;
+}
+</style>
+<div class="container my-3">
+    <div class="row my-3">
+        <div class="col-6">
+            <h2> 중요 키워드 Top10 </h2>
+            {% if lang == 'kr' %}
+            <h5> 한글 , {{platform}} , {{webtoon}} 분석을 시작합니다.</h5>
+            <li> 주인공 이름인 '독자'가 가장 많이 등장합니다.</li>
+            {% elif lang == 'en' %}
+            <h5> 영어 , {{platform}} , {{webtoon}} 분석을 시작합니다.</h5>
+            {% endif %}
+        </div>
+    </div>
+
+
+</div>
+<form id="searchForm" method="get" action="{% url 'webtoonitda:index' %}">
+    <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
+    <input type="hidden" id="page" name="page" value="{{ page }}">
+</form>
+
+{{ df|safe}}
+
+<div class="row">
+    {% if lang == 'kr' %}
+    <div class="background">
+
+        <div class="col-5">
+            <img src="/media/kr/Review_top10_가로바차트_한글.png" style="width: auto; height: auto;"/>
+        </div>
+
+        <div class="col-5">
+            <img src="/media/kr/Review_top10_파이차트1_한글.png" style="width: auto; height: auto;"/>
+        </div>
+    </div>
+    {% elif lang == 'en' %}
+
+
+    {% endif %}
+<div class="container my-3">
+<div class="d-grid gap-2">
+  <button onclick="javascript:history.back();" class="btn btn-lg btn-danger" type="button">뒤로가기</button>
+</div>
+</div>
+</div>
+</form>
+
+{% endblock %}
