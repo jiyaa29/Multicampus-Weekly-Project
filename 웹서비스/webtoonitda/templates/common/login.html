@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
+
+<div>
+
+    <p style="text-align: center;">
+        <img src="/media/home.jpg"/>
+    </p>
+
+</div>
 <div class="container my-3">
     <form method="post" action="{% url 'common:login' %}">
         {% csrf_token %}
@@ -19,12 +27,6 @@
     </form>
 </div>
 
-<div>
 
-    <p style="text-align: center;">
-        <img src="/media/home.jpg"/>
-    </p>
-
-</div>
 
 {% endblock %}
