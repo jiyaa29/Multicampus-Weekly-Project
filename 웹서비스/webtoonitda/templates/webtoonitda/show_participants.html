@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load pybo_filter %}
+{% block content %}
+
+<style>
+    div.background{
+    font-size: 20px;
+}
+
+</style>
+
+
+<div class="container my-3">
+    <div class="row my-3">
+        <div class="col-6">
+            <h3> 전체 참여도 추이</h3>
+            {% if lang == 'kr' %}
+            <h5> 한글 , {{platform}} , {{webtoon}} 분석을 시작합니다.</h5>
+            {% elif lang == 'en' %}
+            <h5> 영어 , {{platform}} , {{webtoon}} 분석을 시작합니다.</h5>
+            {% endif %}
+        </div>
+    </div>
+
+
+</div>
+<form id="searchForm" method="get" action="{% url 'webtoonitda:index' %}">
+    <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
+    <input type="hidden" id="page" name="page" value="{{ page }}">
+</form>
+
+
+<div class="background">
+{{df | safe}}
+</div>
+<div>
+    <img src="/media/kr/kr_전지적 독자 시점_participant.png"/>
+</div>
+
+<div class="container my-3">
+    <div class="d-grid gap-2">
+        <button onclick="javascript:history.back();" class="btn btn-lg btn-danger" type="button">뒤로가기</button>
+    </div>
+</div>
+
+</form>
+
+{% endblock %}

@@ -117,7 +117,19 @@ def show_topic_keywords(request, lang, platform, webtoon):
 
     return render(request, 'webtoonitda/show_topic_keywords.html', context)
 
+def show_participants(request, lang, platform, webtoon):
 
+    print("show_topic_keywords lang: " + lang)
+    print("show_topic_keywords platform: " + platform)
+    print("show_topic_keywords webtoon: " + webtoon)
+
+    context = {
+        'lang': lang,
+        'platform': platform,
+        'webtoon': webtoon,
+    }  # 템플릿에 전달할 데이터를 세팅할 수 있는 오브젝트
+
+    return render(request, 'webtoonitda/show_participants.html', context)
 def show_best_episodes_by_points(request, lang, platform, webtoon):
 
     USE_CSV_FILE = False
