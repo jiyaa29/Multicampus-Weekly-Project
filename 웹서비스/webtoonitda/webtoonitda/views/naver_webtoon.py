@@ -383,7 +383,7 @@ def show_best_by_points(top10, filepath, webtoon):
     """
     top10.plot(kind='barh', color='cornflowerblue', width=0.5, figsize=(10, 10), fontsize=20)
     plt.style.use('ggplot')
-    plt.title( webtoon +' 참여자수 top10 에피소드', fontsize=30, loc='center', pad=20)
+    plt.title( webtoon +' 평점수/참여도 top10 에피소드', fontsize=30, loc='center', pad=20)
 
     plt.xlabel('참여자수', size=15)
     plt.ylabel('에피소드', size=15)

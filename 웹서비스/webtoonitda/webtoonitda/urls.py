@@ -18,6 +18,7 @@ urlpatterns = [
 
     path('show_keywords/<str:lang>/<str:platform>/<str:webtoon>', base_views.show_keywords, name="show_keywords"),
     path('show_topic_keywords/<str:lang>/<str:platform>/<str:webtoon>', base_views.show_topic_keywords, name="show_topic_keywords"),
+    path('episode_page', base_views.episode_page, name="episode_page"),
     path('show_similarity', base_views.show_similarity, name="show_similarity"),
 
 #윤지 작성

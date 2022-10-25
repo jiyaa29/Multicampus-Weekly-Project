@@ -3,8 +3,8 @@
 {% block content %}
 
 <style>
-    .background{
-<!--    background-color: gray;-->
+    div.background{
+    font-size: 20px;
 }
 
 </style>
@@ -13,7 +13,7 @@
 <div class="container my-3">
     <div class="row my-3">
         <div class="col-6">
-            <h2> 평점수 인기 에피소드 순위 top 10</h2>
+            <h3> 평점수/참여도 인기 에피소드 순위 top 10</h3>
             {% if lang == 'kr' %}
             <h5> 한글 , {{platform}} , {{webtoon}} 분석을 시작합니다.</h5>
             {% elif lang == 'en' %}
@@ -31,7 +31,7 @@
 
 
 <div class="background">
-    {{ df|safe}}
+{{df | safe}}
 </div>
 <div>
     <img src="/media/kr/generated.png"/>
