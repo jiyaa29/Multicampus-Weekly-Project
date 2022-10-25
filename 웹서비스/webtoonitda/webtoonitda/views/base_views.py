@@ -212,7 +212,7 @@ def ep_search(request):
           df = pd.read_csv(filepath)
 
           test = df[df['Review'].str.contains(keyword)]  # df에 keyword파라미터 받음
-          df = test.sample(10)  # 원하는 개수만큼 추출
+          df = test.sample(20)  # 원하는 개수만큼 추출
           print(type(df))
 
 
