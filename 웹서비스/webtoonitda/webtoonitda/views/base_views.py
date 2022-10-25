@@ -218,7 +218,7 @@ def ep_search(request):
 
 
           context = {
-              'df': df[:10].to_html(justify='center')
+              'df': df[:20].to_html(justify='center')
 
 
           } # 템플릿에 전달할 데이터를 세팅할 수 있는 오브젝트
