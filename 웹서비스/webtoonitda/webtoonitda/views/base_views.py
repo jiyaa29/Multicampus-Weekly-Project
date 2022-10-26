@@ -68,9 +68,9 @@ def show_best_episodes_by_reviews(request, lang, platform, webtoon):
 
     # 1. 동적으로 크롤링하여 결과 보여주기
 
-    #chromedriver_path = '/media/kr/'  # 윤지 크롬드라이브 경로
+    # chromedriver_path = '/media/kr/'  # 윤지 크롬드라이브 경로
     chromedriver_path = 'c:\python\chromedriver.exe' #윤지 크롬드라이브 경로
-    #chromedriver_path = 'c:\Temp\chromedriver.exe' # 선미님 크롬드라이브 경로
+    # chromedriver_path = 'c:\Temp\chromedriver.exe' # 선미님 크롬드라이브 경로
     # titleId = get_webtoon_titleId(chromedriver_path, platform, lang, webtoon)
     # print("titleId: " + str(titleId))
 
@@ -145,7 +145,7 @@ def show_best_episodes_by_points(request, lang, platform, webtoon):
     else:
         # 크롤링 한다.
         chromedriver_path = 'c:\python\chromedriver.exe' #윤지 크롬드라이브 경로
-        #chromedriver_path = 'c:\Temp\chromedriver.exe' #선미님 크롬드라이브 경로
+        # chromedriver_path = 'c:\Temp\chromedriver.exe' #선미님 크롬드라이브 경로
         titleId = get_webtoon_titleId(chromedriver_path, platform, lang, webtoon)
         print("titleId: " + str(titleId))
         df = get_top10_point_participants(chromedriver_path, platform, lang, titleId)
@@ -157,6 +157,7 @@ def show_best_episodes_by_points(request, lang, platform, webtoon):
 
     df['Episode'] = df.index
     df['Episode'] = df['Episode'] + 1
+
     df = df.drop('Point', axis=1)
     df_top = df
 
