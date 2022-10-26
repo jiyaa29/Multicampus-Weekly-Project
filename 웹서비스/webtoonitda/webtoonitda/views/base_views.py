@@ -69,8 +69,8 @@ def show_best_episodes_by_reviews(request, lang, platform, webtoon):
     # 1. 동적으로 크롤링하여 결과 보여주기
 
     #chromedriver_path = '/media/kr/'  # 윤지 크롬드라이브 경로
-    chromedriver_path = 'c:\python\chromedriver.exe' #윤지 크롬드라이브 경로
-    #chromedriver_path = 'c:\Temp\chromedriver.exe' 선미님 크롬드라이브 경로
+    #chromedriver_path = 'c:\python\chromedriver.exe' #윤지 크롬드라이브 경로
+    chromedriver_path = 'c:\Temp\chromedriver.exe' # 선미님 크롬드라이브 경로
     # titleId = get_webtoon_titleId(chromedriver_path, platform, lang, webtoon)
     # print("titleId: " + str(titleId))
 
@@ -144,27 +144,31 @@ def show_best_episodes_by_points(request, lang, platform, webtoon):
         df = pd.read_csv(DATA_DIR + 'kr_전지적 독자 시점_best_by_points.csv')
     else:
         # 크롤링 한다.
-        chromedriver_path = 'c:\python\chromedriver.exe' #윤지 크롬드라이브 경로
-        # chromedriver_path = 'c:\Temp\chromedriver.exe' 선미님 크롬드라이브 경로
+        #chromedriver_path = 'c:\python\chromedriver.exe' #윤지 크롬드라이브 경로
+        chromedriver_path = 'c:\Temp\chromedriver.exe' #선미님 크롬드라이브 경로
         titleId = get_webtoon_titleId(chromedriver_path, platform, lang, webtoon)
         print("titleId: " + str(titleId))
         df = get_top10_point_participants(chromedriver_path, platform, lang, titleId)
         print("Done")
 
         # 결과를 저장한다
-        df.to_csv(DATA_DIR + '{lang}_{webtoon}_best_by_points.csv'.format(lang=lang, webtoon=webtoon), index=False)
+        df.to_csv(DATA_DIR + '{lang}_{webtoon}_best_by_points.csv'.format(lang=lang, webtoon=webtoon))
         print("Saved.")
 
+    df['Episode'] = df.index
     df = df.drop('Point', axis=1)
-    df = df.sort_values(by=['Participant'], ascending=False)
+    df_top = df
 
-    df_reverse = df.loc[::-1]
+    # df = df.drop('Point', axis=1)
+    # df = df.sort_values(by=['Participant'], ascending=False)
+    #
+    # df_reverse = df.loc[::-1]
 
     # 시각화 파일을 저장한다.
     #filename = lang + '_'+ webtoon + '_best_episodes_by_points.png'
     filename = "generated.png"
     filepath = DATA_DIR + filename
-    show_best_by_points(df_reverse[:10], filepath, webtoon)
+    show_best_by_points(df_top[:10], filepath, webtoon)
 
     #filename = 'kr_iplot_best_episodes_by_points.png'
     #df = df.set_index('Title')

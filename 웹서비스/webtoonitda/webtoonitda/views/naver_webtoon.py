@@ -381,7 +381,7 @@ def show_best_by_points(top10, filepath, webtoon):
     """
     가로막대바 시각화
     """
-    top10.plot(kind='barh', color='cornflowerblue', width=0.5, figsize=(10, 10), fontsize=20)
+    top10.plot(kind='bar', color='cornflowerblue', width=0.5, figsize=(10, 10), fontsize=20)
     plt.style.use('ggplot')
     plt.title( webtoon +' 평점수/참여도 top10 에피소드', fontsize=30, loc='center', pad=20)
 
